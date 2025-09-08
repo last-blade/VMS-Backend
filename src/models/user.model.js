@@ -21,6 +21,7 @@ const userSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Department",
         required: true,
+        index: true,
     },
 
     mobile: {
@@ -34,12 +35,14 @@ const userSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Company",
         required: true,
+        index: true,
     },
 
     plant: {
         type: Schema.Types.ObjectId,
         ref: "Plant",
         required: true,
+        index: true,
     },
 
     signature: {
@@ -52,6 +55,7 @@ const userSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "AccountType",
         required: true,
+        index: true,
     },
 
     address: {
@@ -59,6 +63,12 @@ const userSchema = new Schema({
         trim: true,
         required: false,
         default: null,
+    },
+
+    role: {
+        type: Schema.Types.ObjectId,
+        ref: "Role",
+        required: true,
     },
 
     password: {

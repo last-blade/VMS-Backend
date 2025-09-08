@@ -1,0 +1,35 @@
+import mongoose, { Schema } from "mongoose";
+
+const companySchema = new Schema({
+
+    companyName: {
+        type: String,
+        required: true,
+        trim: true,
+        lowercase: true,
+    },
+
+    companyCountry: {
+        type: Schema.Types.ObjectId,
+        ref: "Country",
+    },
+
+    companyCountry: {
+        type: Schema.Types.ObjectId,
+        ref: "City",
+    },
+
+    companyCreator: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+    },
+
+    isCompanyActive: {
+        type: Boolean,
+        default: true,
+    }
+
+}, {timestamps: true});
+
+export const Company = mongoose.model("Company", companySchema);
