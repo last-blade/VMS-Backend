@@ -1,5 +1,4 @@
-import { asyncHandler } from "../allImport.js";
-import { apiError, apiResponse, User } from "../allImports.js";
+import { apiError, apiResponse, User, asyncHandler } from "../allImports.js";
 
 const registerUser = asyncHandler(async (request, response) => {
     const {fullname, email, password, accountType} = request.body;
