@@ -17,16 +17,54 @@ const userSchema = new Schema({
         index: true,
     },
 
-    accountType: {
-        type: String,
-        enum: ["Admin", "User"],
+    department: {
+        type: Schema.Types.ObjectId,
+        ref: "Department",
         required: true,
+    },
+
+    mobile: {
+        type: Number,
+        required: true,
+        trim: true,
+        unique: true,
+    },
+
+    company: {
+        type: Schema.Types.ObjectId,
+        ref: "Company",
+        required: true,
+    },
+
+    plant: {
+        type: Schema.Types.ObjectId,
+        ref: "Plant",
+        required: true,
+    },
+
+    signature: {
+        type: String,
+        required: false,
+        default: null,
+    },
+
+    accountType: {
+        type: Schema.Types.ObjectId,
+        ref: "AccountType",
+        required: true,
+    },
+
+    address: {
+        type: String,
+        trim: true,
+        required: false,
+        default: null,
     },
 
     password: {
         type: String,
         required: true,
-        // select: false,
+        select: false,
     },
 
     refreshToken: {
