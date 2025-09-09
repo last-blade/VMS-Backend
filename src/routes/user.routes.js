@@ -16,6 +16,7 @@ import { getCountries } from "../controllers/userController/admin/countryControl
 import { createCity } from "../controllers/userController/admin/cityControllers/createCity.controller.js";
 import { createState } from "../controllers/userController/admin/stateController/createState.controller.js";
 import { createPlantType } from "../controllers/userController/admin/plantTypeControllers/createPlantType.controller.js";
+import { createDeparment } from "../controllers/userController/admin/departmentControllers/createDepartment.controller.js";
 
 const router = Router();
 
@@ -48,5 +49,8 @@ router.route("/cities/create-city").post(authentication, createCity);
 
 //PlantType
 router.route("/plant-type/create-plant-type").post(authentication, createPlantType);
+
+//Department
+router.route("/departmeent/create-department").post(authentication, createDeparment);
 
 export default router;
