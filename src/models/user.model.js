@@ -52,12 +52,12 @@ const userSchema = new Schema({
         default: null,
     },
 
-    accountType: {
-        type: Schema.Types.ObjectId,
-        ref: "AccountType",
-        required: true,
-        index: true,
-    },
+    // accountType: {
+    //     type: Schema.Types.ObjectId,
+    //     ref: "AccountType",
+    //     required: true,
+    //     index: true,
+    // },
 
     address: {
         type: String,
