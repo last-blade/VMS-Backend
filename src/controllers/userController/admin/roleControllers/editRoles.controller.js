@@ -17,6 +17,12 @@ const editRoles = asyncHandler(async (request, response) => {
         throw new apiError(400, "Role name required")
     }
 
+    const foundRole = await Role.findById(roleId);
+
+    if(!foundRole){
+        throw new apiError(404, "Role not found or maybe deleted")
+    }
+
     await Role.findByIdAndUpdate(roleId, {
         $set: {
             roleName
