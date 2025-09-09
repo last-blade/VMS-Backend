@@ -21,10 +21,16 @@ const companySchema = new Schema({
         ref: "City",
     },
 
+    companyState: {
+        type: Schema.Types.ObjectId,
+        ref: "State",
+    },
+
     companyCreator: {
         type: Schema.Types.ObjectId,
         ref: "User",
         required: true,
+        index: true,
     },
 
     isCompanyActive: {
