@@ -10,6 +10,25 @@ const getRoles = asyncHandler(async (request, response) => {
         },
 
         {
+            $lookup: {
+                from: "companies",
+                localField: "company",
+                foreignField: "_id",
+                as: "companyDetails"
+            }
+        },
+
+        {
+            $unwind: "$companyDetails"
+        },
+
+        {
+            $match: {
+                "companyDetails.isCompanyActive": true,
+            }
+        },
+
+        {
             $project: {
                 company: 0,
                 roleCreator: 0,
