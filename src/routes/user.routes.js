@@ -7,6 +7,8 @@ import { createRoles } from "../controllers/userController/admin/roleControllers
 import { editRoles } from "../controllers/userController/admin/roleControllers/editRoles.controller.js";
 import { getRoles } from "../controllers/userController/admin/roleControllers/getRoles.controller.js";
 import { deleteRoles } from "../controllers/userController/admin/roleControllers/deleteRoles.controller.js";
+import { createComapny } from "../controllers/userController/admin/companyControllers/createComapny.controller.js";
+import { getCompanies } from "../controllers/userController/admin/companyControllers/getCompanies.controller.js";
 
 const router = Router();
 
@@ -20,5 +22,9 @@ router.route("/roles/create-role").post(authentication, createRoles);
 router.route("/roles/edit-role/:roleId").patch(authentication, editRoles);
 router.route("/roles/get-roles/:roleId").get(authentication, getRoles);
 router.route("/roles/delete-role/:roleId").delete(authentication, deleteRoles);
+
+//Company
+router.route("/companies/create-company").post(authentication, createComapny);
+router.route("/companies/get-companies").post(authentication, getCompanies);
 
 export default router;
