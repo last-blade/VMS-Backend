@@ -11,6 +11,9 @@ import { createComapny } from "../controllers/userController/admin/companyContro
 import { getCompanies } from "../controllers/userController/admin/companyControllers/getCompanies.controller.js";
 import { editCompany } from "../controllers/userController/admin/companyControllers/editCompany.controller.js";
 import { changeCompanyActiveStatus } from "../controllers/userController/admin/companyControllers/changeCompanyActiveStatus.controller.js";
+import { createCountry } from "../controllers/userController/admin/countryControllers/createCountry.controller.js";
+import { getCountries } from "../controllers/userController/admin/countryControllers/getCountries.controller.js";
+import { createState } from "../controllers/userController/admin/cityControllers/createState.controller.js";
 
 const router = Router();
 
@@ -30,5 +33,14 @@ router.route("/companies/create-company").post(authentication, createComapny);
 router.route("/companies/get-companies").post(authentication, getCompanies);
 router.route("/companies/edit-company").post(authentication, editCompany);
 router.route("/companies/change-company-status").post(authentication, changeCompanyActiveStatus);
+
+//Country
+router.route("/countries/create-country").post(authentication, createCountry);
+router.route("/countries/get-countries").post(authentication, getCountries);
+
+
+
+//State
+router.route("/states/create-state").post(authentication, createState);
 
 export default router;
