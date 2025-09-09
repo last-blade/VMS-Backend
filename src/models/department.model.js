@@ -11,6 +11,7 @@ const departmentSchema = new Schema({
 
     headOfDepartment: {
         type: Schema.Types.ObjectId,
+        ref: "User",
         required: false,
     },
 
