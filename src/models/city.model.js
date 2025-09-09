@@ -26,7 +26,6 @@ const citySchema = new Schema({
         ref: "User",
         required: true,
         index: true,
-        unique: true,
     },
 
     iscityActive: {
