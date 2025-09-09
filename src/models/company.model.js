@@ -14,7 +14,7 @@ const companySchema = new Schema({
         ref: "Country",
     },
 
-    companyCountry: {
+    companyCity: {
         type: Schema.Types.ObjectId,
         ref: "City",
     },
