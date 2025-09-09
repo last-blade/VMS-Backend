@@ -5,6 +5,8 @@ import { logoutUser } from "../controllers/userController/logoutUser.controller.
 import { authentication } from "../middlewares/auth.middleware.js";
 import { createRoles } from "../controllers/userController/admin/roleControllers/createRoles.controller.js";
 import { editRoles } from "../controllers/userController/admin/roleControllers/editRoles.controller.js";
+import { getRoles } from "../controllers/userController/admin/roleControllers/getRoles.controller.js";
+import { deleteRoles } from "../controllers/userController/admin/roleControllers/deleteRoles.controller.js";
 
 const router = Router();
 
@@ -14,7 +16,9 @@ router.route("/logout").post(authentication, logoutUser);
 
 
 //Role routes
-router.route("/role/create-role").post(authentication, createRoles);
-router.route("/role/edit-role/:roleId").patch(authentication, editRoles);
+router.route("/roles/create-role").post(authentication, createRoles);
+router.route("/roles/edit-role/:roleId").patch(authentication, editRoles);
+router.route("/roles/get-roles/:roleId").get(authentication, getRoles);
+router.route("/roles/delete-role/:roleId").delete(authentication, deleteRoles);
 
 export default router;
