@@ -6,6 +6,7 @@ const citySchema = new Schema({
         trim: true,
         lowercase: true,
         required: true,
+        index: true,
     },
 
     country: {
@@ -24,6 +25,8 @@ const citySchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "User",
         required: true,
+        index: true,
+        unique: true,
     },
 
     iscityActive: {
@@ -36,6 +39,7 @@ const citySchema = new Schema({
         ref: "Company",
         required: true,
         index: true,
+        unique: true,
     },    
 
 }, {timestamps: true});
