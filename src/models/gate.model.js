@@ -7,6 +7,7 @@ const gateSchema = new Schema({
         required: true,
         trim: true,
         lowercase: true,
+        index: true,
     },
 
     gateNumber: {
@@ -14,6 +15,7 @@ const gateSchema = new Schema({
         required: true,
         trim: true,
         lowercase: true,
+        index: true,
     },
 
     gateInchargeName: {
@@ -26,6 +28,7 @@ const gateSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Company",
         required: true,
+        index: true,
     },
 
     plant: {
