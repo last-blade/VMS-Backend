@@ -13,7 +13,8 @@ const plantSchema = new Schema({
     company: {
         type: Schema.Types.ObjectId,
         ref: "Company",
-        required: true,        
+        required: true,  
+        index: true,      
     },
 
     plantType: {

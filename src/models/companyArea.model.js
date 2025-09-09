@@ -13,6 +13,7 @@ const companyAreaSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Company",
         required: true,
+        index: true,
     },
 
     plant: {
