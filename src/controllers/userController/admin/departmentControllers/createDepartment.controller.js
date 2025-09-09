@@ -7,8 +7,10 @@ const createDeparment = asyncHandler(async (request, response) => {
         throw new apiError(400, "Department name is required")
     }
 
-    if(!isObjectIdValid(headOfDepartment)){
-        throw new apiError(400, "HOD ID is invalid")
+    if(headOfDepartment){
+        if(!isObjectIdValid(headOfDepartment)){
+            throw new apiError(400, "HOD ID is invalid")
+        }
     }
 
     await Department.create({
