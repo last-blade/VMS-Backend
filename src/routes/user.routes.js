@@ -13,7 +13,8 @@ import { editCompany } from "../controllers/userController/admin/companyControll
 import { changeCompanyActiveStatus } from "../controllers/userController/admin/companyControllers/changeCompanyActiveStatus.controller.js";
 import { createCountry } from "../controllers/userController/admin/countryControllers/createCountry.controller.js";
 import { getCountries } from "../controllers/userController/admin/countryControllers/getCountries.controller.js";
-import { createState } from "../controllers/userController/admin/cityControllers/createState.controller.js";
+import { createCity } from "../controllers/userController/admin/cityControllers/createCity.controller.js";
+import { createState } from "../controllers/userController/admin/stateController/createState.controller.js";
 
 const router = Router();
 
@@ -38,9 +39,10 @@ router.route("/companies/change-company-status").post(authentication, changeComp
 router.route("/countries/create-country").post(authentication, createCountry);
 router.route("/countries/get-countries").post(authentication, getCountries);
 
-
-
 //State
 router.route("/states/create-state").post(authentication, createState);
+
+//City
+router.route("/cities/create-city").post(authentication, createCity);
 
 export default router;
