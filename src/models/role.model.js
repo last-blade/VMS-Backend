@@ -9,6 +9,11 @@ const roleSchema = new Schema({
         unique: true,
     },
 
+    isRoleActive: {
+        type: Boolean,
+        default: true,
+    },
+
     roleCreator: {
         type: Schema.Types.ObjectId,
         ref: "User",
