@@ -19,6 +19,13 @@ const countrySchema = new Schema({
         default: true,
     },
 
+    company: {
+        type: Schema.Types.ObjectId,
+        ref: "Company",
+        required: true,
+        index: true,
+    },
+
 }, {timestamps: true});
 
-export const Country = mongoose.model("Company", countrySchema);
+export const Country = mongoose.model("Country", countrySchema);

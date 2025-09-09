@@ -15,6 +15,13 @@ const plantTypeSchema = new Schema({
         required: true,
     },
 
+    company: {
+        type: Schema.Types.ObjectId,
+        ref: "Company",
+        required: true,
+        index: true,
+    },    
+
 }, {timestamps: true});
 
 export const PlantType = mongoose.model("PlantType", plantTypeSchema);

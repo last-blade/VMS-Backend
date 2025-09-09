@@ -26,6 +26,13 @@ const departmentSchema = new Schema({
         index: true,
     },
 
+    company: {
+        type: Schema.Types.ObjectId,
+        ref: "Company",
+        required: true,
+        index: true,
+    },
+
 }, {timestamps: true});
 
 export const Department = mongoose.model("Department", departmentSchema);
