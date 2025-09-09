@@ -4,6 +4,11 @@ import { apiError } from "../utils/apiError.js";
 import { apiResponse } from "../utils/apiResponse.js";
 import { Role } from "../models/role.model.js";
 import { isObjectIdValid } from "../utils/isObjectIdValid.js";
+import { Company } from "../models/company.model.js";
+import { Country } from "../models/country.model.js";
+import { State } from "../models/state.model.js";
+import { City } from "../models/city.model.js";
+import { PlantType } from "../models/plantType.model.js";
 
 export {
     asyncHandler,
@@ -12,4 +17,9 @@ export {
     apiResponse,
     Role,
     isObjectIdValid,
+    Company,
+    Country,
+    State,
+    City,
+    PlantType,
 }
