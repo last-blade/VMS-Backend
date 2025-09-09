@@ -18,6 +18,8 @@ const stateSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "User",
         required: true,
+        index: true,
+        unique: true,
     },
 
     isStateActive: {
@@ -30,6 +32,7 @@ const stateSchema = new Schema({
         ref: "Company",
         required: true,
         index: true,
+        unique: true,
     },
 
 }, {timestamps: true});
