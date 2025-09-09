@@ -6,6 +6,7 @@ const countrySchema = new Schema({
         trim: true,
         lowercase: true,
         required: true,
+        index: true,
     },
 
     countryCreator: {
