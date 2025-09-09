@@ -1,3 +1,4 @@
+import { accessTokenOptions, refreshTokenOptions } from "../../constants.js";
 import { generateAccessToken } from "../../utils/generateAccessToken.js";
 import { generateRefreshToken } from "../../utils/generateRefreshToken.js";
 import { apiError, apiResponse, asyncHandler, User } from "../allImports.js";
@@ -9,7 +10,7 @@ const loginUser = asyncHandler(async (request, response) => {
         throw new apiError(404, "All fields are required")
     }
 
-    const foundUser = await User.findOne({email});
+    const foundUser = await User.findOne({email}).select("+password");
 
     if(!foundUser){
         throw new apiError(404, "User with this email does not exists")
