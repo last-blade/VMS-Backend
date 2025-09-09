@@ -10,6 +10,7 @@ import { deleteRoles } from "../controllers/userController/admin/roleControllers
 import { createComapny } from "../controllers/userController/admin/companyControllers/createComapny.controller.js";
 import { getCompanies } from "../controllers/userController/admin/companyControllers/getCompanies.controller.js";
 import { editCompany } from "../controllers/userController/admin/companyControllers/editCompany.controller.js";
+import { changeCompanyActiveStatus } from "../controllers/userController/admin/companyControllers/changeCompanyActiveStatus.controller.js";
 
 const router = Router();
 
@@ -28,5 +29,6 @@ router.route("/roles/delete-role/:roleId").delete(authentication, deleteRoles);
 router.route("/companies/create-company").post(authentication, createComapny);
 router.route("/companies/get-companies").post(authentication, getCompanies);
 router.route("/companies/edit-company").post(authentication, editCompany);
+router.route("/companies/change-company-status").post(authentication, changeCompanyActiveStatus);
 
 export default router;
