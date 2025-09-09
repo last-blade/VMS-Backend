@@ -7,6 +7,8 @@ const companySchema = new Schema({
         required: true,
         trim: true,
         lowercase: true,
+        unique: true,
+        index: true,
     },
 
     companyCountry: {
