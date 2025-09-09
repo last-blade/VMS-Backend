@@ -9,7 +9,8 @@ const createRoles = asyncHandler(async (request, response) => {
 
     await Role.create({
         roleName,
-        roleCreator: request.user.id
+        roleCreator: request.user.id,
+        company: request.user.company,
     });
 
     return response.status(201)
