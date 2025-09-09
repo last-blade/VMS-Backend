@@ -36,6 +36,7 @@ const userSchema = new Schema({
         ref: "Company",
         required: true,
         index: true,
+        unique: true,
     },
 
     plant: {
