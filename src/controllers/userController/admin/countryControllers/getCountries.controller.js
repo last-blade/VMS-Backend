@@ -33,6 +33,7 @@ const getCountries = asyncHandler(async (request, response) => {
                 company: 0,
                 countryCreator: 0,
                 __v: 0,
+                companyDetails: 0,
             }
         },
     ]);
