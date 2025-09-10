@@ -5,6 +5,7 @@ const getDepartments = asyncHandler(async (request, response) => {
         company: request.user.company,
     }).populate("headOfDepartment", "fullname")
     .populate("departmentCreator", "fullname")
+    .populate("company", "companyName")
 
     return response.status(200)
     .json(
