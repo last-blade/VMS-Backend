@@ -32,7 +32,12 @@ const loginUser = asyncHandler(async (request, response) => {
     foundUser.refreshToken = refreshToken;
     foundUser.save({validateBeforeSave: false});
 
-    const user = await User.findOne({email}).select("-password -refreshToken -_id -__v");
+    const user = await User.findOne({email})
+    .populate("department", "departmentName")
+    .populate("company", "companyName")
+    .populate("plant", "plantName")
+    .populate("role", "roleName")
+    .select("-password -refreshToken -_id -__v");
 
     return response.status(200)
     .cookie("accessToken", accessToken, accessTokenOptions)
