@@ -10,6 +10,7 @@ import { State } from "../models/state.model.js";
 import { City } from "../models/city.model.js";
 import { PlantType } from "../models/plantType.model.js";
 import { Department } from "../models/department.model.js";
+import { Plant } from "../models/plant.model.js";
 
 export {
     asyncHandler,
@@ -24,4 +25,5 @@ export {
     City,
     PlantType,
     Department,
+    Plant,
 }
