@@ -23,6 +23,7 @@ import { getCities } from "../controllers/userController/admin/cityControllers/g
 import { getDepartments } from "../controllers/userController/admin/departmentControllers/getDepartments.controller.js";
 import { getStates } from "../controllers/userController/admin/stateController/getStates.controller.js";
 import { getGates } from "../controllers/userController/admin/gateControllers/getGates.controller.js";
+import { getPlants } from "../controllers/userController/admin/plantControllers/getPlants.controller.js";
 
 const router = Router();
 
@@ -60,6 +61,7 @@ router.route("/plant-types/create-plant-type").post(authentication, createPlantT
 
 //Plant
 router.route("/plants/create-plant").post(authentication, createPlant);
+router.route("/plants/fetch-plants").get(authentication, getPlants);
 
 //Department
 router.route("/department/create-department").post(authentication, createDeparment);
