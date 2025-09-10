@@ -36,18 +36,18 @@ router.route("/logout").post(authentication, logoutUser);
 //Role routes
 router.route("/roles/create-role").post(authentication, createRoles);
 router.route("/roles/edit-role/:roleId").patch(authentication, editRoles);
-router.route("/roles/get-roles/:roleId").get(authentication, getRoles);
+router.route("/roles/fetch-roles").get(authentication, getRoles);
 router.route("/roles/delete-role/:roleId").delete(authentication, deleteRoles);
 
 //Company
 router.route("/companies/create-company").post(authentication, createComapny);
-router.route("/companies/get-companies").get(authentication, getCompanies);
+router.route("/companies/fetch-companies").get(authentication, getCompanies);
 router.route("/companies/edit-company").patch(authentication, editCompany);
 router.route("/companies/change-company-status").patch(authentication, changeCompanyActiveStatus);
 
 //Country
 router.route("/countries/create-country").post(authentication, createCountry);
-router.route("/countries/get-countries").get(authentication, getCountries);
+router.route("/countries/fetch-countries").get(authentication, getCountries);
 
 //State
 router.route("/states/create-state").post(authentication, createState);
