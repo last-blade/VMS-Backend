@@ -22,6 +22,7 @@ import { createGate } from "../controllers/userController/admin/gateControllers/
 import { getCities } from "../controllers/userController/admin/cityControllers/getCities.controller.js";
 import { getDepartments } from "../controllers/userController/admin/departmentControllers/getDepartments.controller.js";
 import { getStates } from "../controllers/userController/admin/stateController/getStates.controller.js";
+import { getGates } from "../controllers/userController/admin/gateControllers/getGates.controller.js";
 
 const router = Router();
 
@@ -66,5 +67,6 @@ router.route("/department/fetch-departments").get(authentication, getDepartments
 
 //Gate
 router.route("/gates/create-gate").post(authentication, createGate);
+router.route("/gates/fetch-gates").get(authentication, getGates);
 
 export default router;
