@@ -27,7 +27,7 @@ export const createArea = asyncHandler(async (request, response) => {
   } catch (error) {
     // MongoDB duplicate key error code
     if (error.code === 11000) {
-      throw new apiError(400, `Area name "${areaName}" already exists in this plant`);
+      throw new apiError(400, `Area name '${areaName}' already exists in this plant`);
     }
 
     throw new apiError(500, error.message || "Something went wrong");
