@@ -33,6 +33,7 @@ const getRoles = asyncHandler(async (request, response) => {
                 company: 0,
                 roleCreator: 0,
                 __v: 0,
+                companyDetails: 0,
             }
         },
     ]);
