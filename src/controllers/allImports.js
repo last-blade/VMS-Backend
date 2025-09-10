@@ -12,6 +12,7 @@ import { PlantType } from "../models/plantType.model.js";
 import { Department } from "../models/department.model.js";
 import { Plant } from "../models/plant.model.js";
 import { Gate } from "../models/gate.model.js";
+import { Area } from "../models/area.model.js";
 
 export {
     asyncHandler,
@@ -28,4 +29,5 @@ export {
     Department,
     Plant,
     Gate,
+    Area,
 }
