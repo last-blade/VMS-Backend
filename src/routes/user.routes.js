@@ -25,6 +25,8 @@ import { getStates } from "../controllers/userController/admin/stateController/g
 import { getGates } from "../controllers/userController/admin/gateControllers/getGates.controller.js";
 import { getPlants } from "../controllers/userController/admin/plantControllers/getPlants.controller.js";
 import { getPlantTypes } from "../controllers/userController/admin/plantTypeControllers/getPlantTypes.controller.js";
+import { createArea } from "../controllers/userController/admin/areaControllers/createArea.controller.js";
+import { getAreas } from "../controllers/userController/admin/areaControllers/getAreas.controller.js";
 
 const router = Router();
 
@@ -72,5 +74,9 @@ router.route("/departments/fetch-departments").get(authentication, getDepartment
 //Gate
 router.route("/gates/create-gate").post(authentication, createGate);
 router.route("/gates/fetch-gates").get(authentication, getGates);
+
+//Area
+router.route("/areas/create-area").post(authentication, createArea);
+router.route("/areas/fetch-areas").get(authentication, getAreas);
 
 export default router;
