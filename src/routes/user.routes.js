@@ -56,7 +56,7 @@ router.route("/cities/create-city").post(authentication, createCity);
 router.route("/cities/fetch-cities").get(authentication, getCities);
 
 //PlantType
-router.route("/plant-typesmaintains the consistency/create-plant-type").post(authentication, createPlantType);
+router.route("/plant-types/create-plant-type").post(authentication, createPlantType);
 
 //Plant
 router.route("/plants/create-plant").post(authentication, createPlant);
