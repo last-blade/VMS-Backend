@@ -53,10 +53,10 @@ router.route("/cities/create-city").post(authentication, createCity);
 router.route("/cities/fetch-cities").get(authentication, getCities);
 
 //PlantType
-router.route("/plant-type/create-plant-type").post(authentication, createPlantType);
+router.route("/plant-typesmaintains the consistency/create-plant-type").post(authentication, createPlantType);
 
 //Plant
-router.route("/plant/create-plant").post(authentication, createPlant);
+router.route("/plants/create-plant").post(authentication, createPlant);
 
 //Department
 router.route("/department/create-department").post(authentication, createDeparment);
