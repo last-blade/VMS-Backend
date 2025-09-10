@@ -66,8 +66,8 @@ router.route("/plants/create-plant").post(authentication, createPlant);
 router.route("/plants/fetch-plants").get(authentication, getPlants);
 
 //Department
-router.route("/department/create-department").post(authentication, createDeparment);
-router.route("/department/fetch-departments").get(authentication, getDepartments);
+router.route("/departments/create-department").post(authentication, createDeparment);
+router.route("/departments/fetch-departments").get(authentication, getDepartments);
 
 //Gate
 router.route("/gates/create-gate").post(authentication, createGate);
