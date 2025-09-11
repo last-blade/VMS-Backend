@@ -3,7 +3,7 @@ import { apiError, apiResponse, asyncHandler, Country } from "../../../allImport
 const createCountry = asyncHandler(async (request, response) => {
     const {countryName} = request.body;
 
-    if(countryName.trim() === "" || countryName === undefined){
+    if(countryName === undefined || countryName.trim() === ""){
         throw new apiError(400, "Country name is required")
     }
 
