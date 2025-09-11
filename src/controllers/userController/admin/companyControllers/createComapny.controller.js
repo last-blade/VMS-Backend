@@ -3,8 +3,8 @@ import { apiError, apiResponse, asyncHandler, Company, isObjectIdValid } from ".
 const createComapny = asyncHandler(async (request, response) => {
     const {companyName, companyCountry, companyCity} = request.body;
 
-    if(companyName.trim() === "" || companyName === undefined){
-        throw new apiError(400, "Company name required")
+    if(!companyName || companyName.trim() === ""){
+        throw new apiError(400, "Company name is required")
     }
 
     if(!isObjectIdValid(companyCountry) || !isObjectIdValid(companyCity)){
