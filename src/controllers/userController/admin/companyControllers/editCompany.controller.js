@@ -8,6 +8,10 @@ const editCompany = asyncHandler(async (request, response) => {
         throw new apiError(400, "Company ID is not valid")
     }
 
+    if(!companyName || companyName.trim() === ""){
+        throw new apiError(400, "Company name is required")
+    }
+
     const foundCompany = await Company.findById(companyId);
 
     if(!foundCompany){
