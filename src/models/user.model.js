@@ -30,6 +30,7 @@ const userSchema = new Schema({
         required: true,
         trim: true,
         unique: true,
+        index: true,
     },
 
     company: {
@@ -71,6 +72,7 @@ const userSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Role",
         required: true,
+        index: true,
     },
 
     password: {
