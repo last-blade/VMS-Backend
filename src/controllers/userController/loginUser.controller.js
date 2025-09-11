@@ -4,13 +4,19 @@ import { generateRefreshToken } from "../../utils/generateRefreshToken.js";
 import { apiError, apiResponse, asyncHandler, User } from "../allImports.js";
 
 const loginUser = asyncHandler(async (request, response) => {
-    const {email, password} = request.body;
+    const {email, mobile, password} = request.body;
 
-    if(!email.trim() || !password){
-        throw new apiError(404, "All fields are required")
+    if((!email || !email.trim() === "") && !mobile){
+        throw new apiError(400, "Email or mobile number is required for login")
     }
 
-    const foundUser = await User.findOne({email}).select("+password");
+    if(!password){
+        throw new apiError(404, "Password is required")
+    }
+
+    const foundUser = await User.findOne({
+        $or: [{email}, {mobile}]
+    }).select("+password");
 
     if(!foundUser){
         throw new apiError(404, "User with this email does not exists")
@@ -32,7 +38,9 @@ const loginUser = asyncHandler(async (request, response) => {
     foundUser.refreshToken = refreshToken;
     foundUser.save({validateBeforeSave: false});
 
-    const user = await User.findOne({email})
+    const user = await User.findOne({
+        $or: [{email}, {mobile}]
+    })
     .populate("department", "departmentName")
     .populate("company", "companyName")
     .populate("plant", "plantName")
