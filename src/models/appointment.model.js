@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+import { apiError } from "../utils/apiError";
 
 const appointmentSchema = new Schema({
     plant: {
@@ -41,7 +42,7 @@ const appointmentSchema = new Schema({
 
     isAppointmentExtended: {
         type: Boolean,
-        required: false,
+        default: false,
         index: true,
     },
 
@@ -54,11 +55,59 @@ const appointmentSchema = new Schema({
 
     visitors: [
         {
-            type: Schema.Types.ObjectId,
-            ref: "Visitor",
-            required: true,
+            mobile: {
+                type: Number,
+                required: true,
+                index: true,
+            },
+
+            fullname: {
+                type: String,
+                required: true,
+                trim: true,
+                lowercase: true,
+            },
+
+            company: {
+                type: String,
+                required: false,
+                trim: true,
+                lowercase: true,
+            },
+
+            email: {
+                type: String,
+                required: false,
+                trim: true,
+                lowercase: true,
+            },
+
+            belongings: [
+                {
+                    assetName: {
+                        type: String,
+                        required: false,
+                        trim: true,
+                        lowercase: true,
+                    },
+                }
+            ]
         }
     ],
 }, {timestamps: true});
+
+
+appointmentSchema.pre("save", function(next){
+    const today = Date.now();
+    if(this.appointmentDate < today){
+        return next(new Error("Cant't select the past date for appointment"))
+    }
+
+    if(this.appointmentValidTill && this.appointmentValidTill < this.appointmentDate){
+        return next(new Error("Appointment Valid Till cannot be before appointmentDate"))
+    }
+
+    next();
+})
 
 export const Appointment = mongoose.model("Appointment", appointmentSchema);
