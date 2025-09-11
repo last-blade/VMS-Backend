@@ -6,7 +6,7 @@ const plantTypeSchema = new Schema({
         required: true,
         lowercase: true,
         trim: true,
-        unique: true,
+        index: true,
     },
 
     plantTypeCreator: {
@@ -23,5 +23,7 @@ const plantTypeSchema = new Schema({
     },    
 
 }, {timestamps: true});
+
+plantTypeSchema.index({plantType: 1, company: 1}, {unique: true});
 
 export const PlantType = mongoose.model("PlantType", plantTypeSchema);
