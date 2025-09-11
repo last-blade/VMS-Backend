@@ -7,12 +7,14 @@ const departmentSchema = new Schema({
         required: true,
         trim: true,
         lowercase: true,
+        index: true,
     },
 
     headOfDepartment: {
         type: Schema.Types.ObjectId,
         ref: "User",
         required: false,
+        index: true,
     },
 
     departmentCreator: {
@@ -35,5 +37,7 @@ const departmentSchema = new Schema({
     },
 
 }, {timestamps: true});
+
+departmentSchema.index({departmentName: 1, company: 1}, {unique: true})
 
 export const Department = mongoose.model("Department", departmentSchema);
