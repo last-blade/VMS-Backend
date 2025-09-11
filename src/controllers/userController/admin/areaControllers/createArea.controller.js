@@ -3,7 +3,7 @@ import { asyncHandler, apiError, apiResponse, Area, isObjectIdValid } from "../.
 export const createArea = asyncHandler(async (request, response) => {
   const { areaName, plant } = request.body;
 
-  if(areaName.trim() === "" || areaName === undefined){
+  if(!areaName || areaName.trim() === ""){
     throw new apiError(400, "Area name is required")
   }
 
