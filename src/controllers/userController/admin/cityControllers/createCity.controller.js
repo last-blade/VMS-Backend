@@ -3,7 +3,7 @@ import { apiError, apiResponse, asyncHandler, City, isObjectIdValid, State } fro
 const createCity = asyncHandler(async (request, response) => {
     const {cityName, country, state} = request.body;
 
-    if(cityName.trim() === "" || cityName === undefined){
+    if(cityName === undefined || cityName.trim() === ""){
         throw new apiError(400, "City name is required")
     }
 
