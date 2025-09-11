@@ -7,6 +7,7 @@ const companyAreaSchema = new Schema({
         lowercase: true,
         trim: true,
         required: true,
+        index: true,
     },
 
     company: {
@@ -33,5 +34,7 @@ const companyAreaSchema = new Schema({
         default: true,
     }
 }, {timestamps: true});
+
+companyAreaSchema.index({companyAreaName: 1, company: 1, plant: 1}, {unique: true});
 
 export const CompanyArea = mongoose.model("CompanyArea", companyAreaSchema);
