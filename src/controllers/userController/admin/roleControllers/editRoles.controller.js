@@ -13,7 +13,7 @@ const editRoles = asyncHandler(async (request, response) => {
         throw new apiError(400, "Role ID is invalid")
     }
 
-    if(roleName.trim() === "" || roleName === undefined){
+    if(!roleName || roleName.trim() === ""){
         throw new apiError(400, "Role name required")
     }
 

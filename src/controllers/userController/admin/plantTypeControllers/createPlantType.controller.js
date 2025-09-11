@@ -3,7 +3,7 @@ import { apiError, apiResponse, asyncHandler, PlantType } from "../../../allImpo
 const createPlantType = asyncHandler(async (request, response) => {
     const {plantType} = request.body;
 
-    if(plantType.trim() === "" || plantType === undefined){
+    if(!plantType || plantType.trim() === ""){
         throw new apiError(400, "Plant type is required")
     }
 

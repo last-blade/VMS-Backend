@@ -3,7 +3,7 @@ import { apiError, apiResponse, asyncHandler, Role } from "../../../allImports.j
 const createRoles = asyncHandler(async (request, response) => {
     const {roleName} = request.body;
 
-    if(roleName.trim() === "" || roleName === undefined){
+    if(!roleName|| roleName.trim() === ""){
         throw new apiError(400, "Role name required")
     }
 

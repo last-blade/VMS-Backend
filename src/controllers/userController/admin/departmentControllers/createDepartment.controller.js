@@ -3,7 +3,7 @@ import { apiError, apiResponse, asyncHandler, Department, isObjectIdValid } from
 const createDeparment = asyncHandler(async (request, response) => {
     const {departmentName, headOfDepartment} = request.body;
 
-    if(departmentName.trim() === "" || departmentName === undefined){
+    if(departmentName === undefined || departmentName.trim() === ""){
         throw new apiError(400, "Department name is required")
     }
 

@@ -3,7 +3,7 @@ import { apiError, apiResponse, asyncHandler, isObjectIdValid, State } from "../
 const createState = asyncHandler(async (request, response) => {
     const {stateName, country} = request.body;
 
-    if(stateName.trim() === "" || stateName === undefined){
+    if(!stateName || stateName.trim() === ""){
         throw new apiError(400, "Country name is required")
     }
 

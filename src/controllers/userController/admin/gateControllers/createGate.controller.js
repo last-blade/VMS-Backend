@@ -3,7 +3,7 @@ import { apiError, apiResponse, asyncHandler, Gate, isObjectIdValid } from "../.
 const createGate = asyncHandler(async (request, response) => {
     const {gateName, gateNumber, gateInchargeName, company, plant, gateOpenTime, gateCloseTime, gateSecurity} = request.body;
 
-    if(gateName.trim() === "" || gateName === undefined){
+    if(!gateName || gateName.trim() === ""){
         throw new apiError(400, "Gate name required")
     }
 

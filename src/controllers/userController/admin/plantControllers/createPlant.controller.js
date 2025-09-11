@@ -3,7 +3,7 @@ import { apiError, apiResponse, asyncHandler, isObjectIdValid, Plant } from "../
 const createPlant = asyncHandler(async (request, response) => {
     const {plantName, plantType, plantCountry, plantState, plantCity} = request.body;
 
-    if(plantName.trim() === "" || plantName === undefined){
+    if(!plantName || plantName.trim() === ""){
         throw new apiError(400, "Plant is required")
     }
 
