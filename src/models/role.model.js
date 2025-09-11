@@ -6,7 +6,7 @@ const roleSchema = new Schema({
         required: true,
         lowercase: true,
         trim: true,
-        unique: true,
+        index: true,
     },
 
     isRoleActive: {
@@ -29,5 +29,7 @@ const roleSchema = new Schema({
     },
 
 }, {timestamps: true});
+
+roleSchema.index({roleName: 1, company: 1}, {unique: true})
 
 export const Role = mongoose.model("Role", roleSchema);
