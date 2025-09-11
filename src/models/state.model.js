@@ -6,6 +6,7 @@ const stateSchema = new Schema({
         trim: true,
         lowercase: true,
         required: true,
+        index: true,
     },
 
     country: {
@@ -19,7 +20,6 @@ const stateSchema = new Schema({
         ref: "User",
         required: true,
         index: true,
-        unique: true,
     },
 
     isStateActive: {
@@ -35,5 +35,7 @@ const stateSchema = new Schema({
     },
 
 }, {timestamps: true});
+
+stateSchema.index({stateName: 1, company: 1}, {unique: true})
 
 export const State = mongoose.model("State", stateSchema);
