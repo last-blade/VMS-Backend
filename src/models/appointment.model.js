@@ -1,5 +1,4 @@
 import mongoose, { Schema } from "mongoose";
-import { apiError } from "../utils/apiError";
 
 const appointmentSchema = new Schema({
     plant: {
@@ -94,6 +93,13 @@ const appointmentSchema = new Schema({
             ]
         }
     ],
+
+    appointmentCreator: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+        index: true,
+    },
 }, {timestamps: true});
 
 
