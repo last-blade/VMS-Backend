@@ -11,11 +11,16 @@ const createPlant = asyncHandler(async (request, response) => {
         throw new apiError(400, "Object IDs are invalid")
     }
 
+    // const foundPlant = await Plant.findOne({
+    //     plantName,
+    //     plantCreator: request.user.id,
+    //     company: request.user.company,
+    // });
+
+    //only one plant can exist in a company
     const foundPlant = await Plant.findOne({
-        plantName,
-        plantCreator: request.user.id,
-        company: request.user.company,
-    });
+        company: request.user.company
+    })
 
     if(foundPlant){
         throw new apiError(400, "Plant already exists")
