@@ -3,6 +3,11 @@ import { apiError, apiResponse, asyncHandler, Company, isObjectIdValid } from ".
 const createComapny = asyncHandler(async (request, response) => {
     const {companyName, companyCountry, companyState, companyCity} = request.body;
 
+    const existingCompany = await Company.findById(request.user?.company);
+    if(existingCompany){
+        throw new apiError(404, "Already own a company, can't add another.")
+    }
+
     if(!companyName || companyName.trim() === ""){
         throw new apiError(400, "Company name is required")
     }
