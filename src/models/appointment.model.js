@@ -35,15 +35,15 @@ const appointmentSchema = new Schema({
 
     appointmentValidTill: {
         type: Date,
-        required: false,
+        required: true,
         index: true,
     },
 
-    isAppointmentExtended: {
-        type: Boolean,
-        default: false,
-        index: true,
-    },
+    // isAppointmentExtended: {
+    //     type: Boolean,
+    //     default: false,
+    //     index: true,
+    // },
 
     purposeOfVisit: {
         type: String,
