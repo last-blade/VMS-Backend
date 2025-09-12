@@ -13,7 +13,6 @@ const createCity = asyncHandler(async (request, response) => {
 
     const foundCity = await City.findOne({
         cityName,
-        cityCreator: request.user.id,
         company: request.user.company,
     });
 
