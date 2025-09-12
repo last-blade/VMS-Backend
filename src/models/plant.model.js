@@ -52,6 +52,12 @@ const plantSchema = new Schema({
         default: true,
     },
 
+    plantQr: {
+        type: String,
+        required: false,
+        trim: true,
+    },
+
 }, {timestamps: true});
 
 plantSchema.index({plantName: 1, company: 1, plantCreator: 1}, {unique: 1});
