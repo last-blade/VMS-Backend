@@ -106,6 +106,14 @@ const appointmentSchema = new Schema({
         index: true,
     },
 
+    appointmentId: {
+        type: String,
+        required: false,
+        trim: true,
+        unique: true,
+        index: true,
+    },
+
     appointmentCreator: {
         type: Schema.Types.ObjectId,
         ref: "User",
@@ -123,6 +131,10 @@ appointmentSchema.pre("save", function(next){
 
     if(this.appointmentValidTill && this.appointmentValidTill < this.appointmentDate){
         return next(new Error("Appointment Valid Till cannot be before appointmentDate"))
+    }
+
+    if (!this.appointmentId) {
+        this.appointmentId = `APT-${this._id.toString().slice(-8).toUpperCase()}`;
     }
 
     next();
