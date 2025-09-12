@@ -1,4 +1,5 @@
 import { apiError, apiResponse, asyncHandler, isObjectIdValid, Plant } from "../../../allImports.js";
+import QRCode from "qrcode";
 
 const createPlant = asyncHandler(async (request, response) => {
     const {plantName, plantType, plantCountry, plantState, plantCity} = request.body;
@@ -26,7 +27,7 @@ const createPlant = asyncHandler(async (request, response) => {
         throw new apiError(400, "There can only one plant exist in a company")
     }
 
-    await Plant.create({
+    const newPlant = await Plant.create({
         plantName,
         plantCreator: request.user.id,
         company: request.user.company,
@@ -35,6 +36,18 @@ const createPlant = asyncHandler(async (request, response) => {
         plantState: plantState,
         plantCity: plantCity,
     });
+
+    const createdPlant = await Plant.findById(newPlant._id);
+
+    const qrData = JSON.stringify({
+        plantId: newPlant._id,
+        companyId: newPlant.company
+    });
+
+    const qrCodeDataUri = await QRCode.toDataURL(qrData);
+    
+    createdPlant.plantQr = qrCodeDataUri;
+    await createdPlant.save({validateBeforeSave: false});
 
     return response.status(201)
     .json(
