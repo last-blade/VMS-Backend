@@ -115,8 +115,16 @@ const appointmentSchema = new Schema({
     },
 
     isAppointmentActive: {
-        type: Boolean,
-        default: false,
+        type: String,
+        enum: ["Approved", "Rejected"],
+        default: "Rejected",
+        index: true,
+    },
+
+    company: {
+        type: Schema.Types.ObjectId,
+        ref: "Company",
+        required: true,
         index: true,
     },
 
