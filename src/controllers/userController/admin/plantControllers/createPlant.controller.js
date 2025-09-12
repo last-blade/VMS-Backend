@@ -23,7 +23,7 @@ const createPlant = asyncHandler(async (request, response) => {
     })
 
     if(foundPlant){
-        throw new apiError(400, "Plant already exists")
+        throw new apiError(400, "There can only one plant exist in a company")
     }
 
     await Plant.create({
