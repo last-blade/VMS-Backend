@@ -94,6 +94,18 @@ const appointmentSchema = new Schema({
         }
     ],
 
+    checkedInTime: {
+        type: Date,
+        required: false,
+        index: true,
+    },
+
+    checkedOutTime: {
+        type: Date,
+        required: false,
+        index: true,
+    },
+
     appointmentCreator: {
         type: Schema.Types.ObjectId,
         ref: "User",
