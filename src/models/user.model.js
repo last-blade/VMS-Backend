@@ -108,6 +108,7 @@ userSchema.methods.generateAccessToken = async function(){
             fullName: this.fullName,
             accountType: this.accountType,
             company: this.company,
+            mobile: this.mobile,
         },
 
         process.env.ACCESS_TOKEN_SECRET_KEY,
