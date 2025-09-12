@@ -29,4 +29,6 @@ const countrySchema = new Schema({
 
 }, {timestamps: true});
 
+countrySchema.index({countryName: 1, company: 1}, {unique: true})
+
 export const Country = mongoose.model("Country", countrySchema);
