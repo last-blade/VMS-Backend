@@ -17,7 +17,11 @@ const rejectOrApproveVisitorAppointment = asyncHandler(async (request, response)
         throw new apiError(404, "Apointment not found")
     }
 
-    foundAppointment.isAppointmentActive = appointmentStatus;
+    if(appointmentStatus === "Approved"){
+        foundAppointment.isAppointmentActive = true;
+    }
+
+    foundAppointment.appointmentStatus = appointmentStatus;
     foundAppointment.save({validateBeforeSave: false});
 
     return response.status(200)
