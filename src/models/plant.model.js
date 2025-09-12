@@ -54,4 +54,6 @@ const plantSchema = new Schema({
 
 }, {timestamps: true});
 
+plantSchema.index({plantName: 1, company: 1, plantCreator: 1}, {unique: 1});
+
 export const Plant = mongoose.model("Plant", plantSchema);
