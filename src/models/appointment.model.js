@@ -114,6 +114,12 @@ const appointmentSchema = new Schema({
         index: true,
     },
 
+    isAppointmentActive: {
+        type: Boolean,
+        default: false,
+        index: true,
+    },
+
     appointmentCreator: {
         type: Schema.Types.ObjectId,
         ref: "User",
