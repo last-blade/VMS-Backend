@@ -42,4 +42,6 @@ const citySchema = new Schema({
 
 }, {timestamps: true});
 
+citySchema.index({ cityName: 1, company: 1 }, { unique: true });
+
 export const City = mongoose.model("City", citySchema);
