@@ -31,6 +31,8 @@ import { createAppointment } from "../controllers/userController/appointmentCont
 import { scanQrCode } from "../controllers/userController/appointmentControllers/scanQrCode.controller.js";
 import { visitorsCheckout } from "../controllers/userController/appointmentControllers/visitorsCheckout.controller.js";
 import { rejectOrApproveVisitorAppointment } from "../controllers/userController/appointmentControllers/rejectOrApproveVisitorAppointment.controller.js";
+import { deleteArea } from "../controllers/userController/admin/areaControllers/deleteArea.controller.js";
+import { editArea } from "../controllers/userController/admin/areaControllers/editArea.controller.js";
 
 const router = Router();
 
@@ -82,6 +84,8 @@ router.route("/gates/fetch-gates").get(authentication, getGates);
 //Area
 router.route("/areas/create-area").post(authentication, createArea);
 router.route("/areas/fetch-areas").get(authentication, getAreas);
+router.route("/areas/edit-area/:areaId").patch(authentication, editArea);
+router.route("/areas/delete-area/:areaId").delete(authentication, deleteArea);
 
 //Appointment
 router.route("/appointments/create-appointment").post(authentication, createAppointment);
