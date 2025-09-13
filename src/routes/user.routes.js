@@ -27,6 +27,10 @@ import { getPlants } from "../controllers/userController/admin/plantControllers/
 import { getPlantTypes } from "../controllers/userController/admin/plantTypeControllers/getPlantTypes.controller.js";
 import { createArea } from "../controllers/userController/admin/areaControllers/createArea.controller.js";
 import { getAreas } from "../controllers/userController/admin/areaControllers/getAreas.controller.js";
+import { createAppointment } from "../controllers/userController/appointmentControllers/createAppointment.controller.js";
+import { scanQrCode } from "../controllers/userController/appointmentControllers/scanQrCode.controller.js";
+import { visitorsCheckout } from "../controllers/userController/appointmentControllers/visitorsCheckout.controller.js";
+import { rejectOrApproveVisitorAppointment } from "../controllers/userController/appointmentControllers/rejectOrApproveVisitorAppointment.controller.js";
 
 const router = Router();
 
@@ -78,5 +82,11 @@ router.route("/gates/fetch-gates").get(authentication, getGates);
 //Area
 router.route("/areas/create-area").post(authentication, createArea);
 router.route("/areas/fetch-areas").get(authentication, getAreas);
+
+//Appointment
+router.route("/appointments/create-appointment").post(authentication, createAppointment);
+router.route("/appointments/checkin-visitors").post(authentication, scanQrCode);
+router.route("/appointments/checkout-visitors").post(authentication, visitorsCheckout);
+router.route("/appointments/approve-reject-visitors").post(authentication, rejectOrApproveVisitorAppointment);
 
 export default router;
