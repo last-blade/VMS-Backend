@@ -13,6 +13,10 @@ const deleteArea = asyncHandler(async (request, response) => {
         throw new apiError(404, "Area not found, maybe deleted")
     }
 
+    if(foundArea.usageCount > 0){
+        throw new apiError(400, "Cannot delete: area is still in use")
+    }
+
     await Area.findByIdAndDelete(areaId);
 
     return response.status(200)

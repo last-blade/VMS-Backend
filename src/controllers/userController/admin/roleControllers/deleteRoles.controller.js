@@ -17,6 +17,10 @@ const deleteRoles = asyncHandler(async (request, response) => {
         throw new apiError(404, "Role not found or maybe deleted")
     }
 
+    if(foundRole.usageCount > 0){
+        throw new apiError(400, "Cannot delete: role is still in use")
+    }
+
     await Role.findByIdAndDelete(roleId);
 
     return response.status(200)
