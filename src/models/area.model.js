@@ -39,6 +39,7 @@ const areaSchema = new Schema({
         required: true,
         select: false,
         trim: true,
+        default: 0,
     },
 
 }, {timestamps: true});
