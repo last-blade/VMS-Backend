@@ -26,7 +26,6 @@ const plantTypeSchema = new Schema({
         type: Number,
         required: true,
         select: false,
-        trim: true,
         default: 0,
     },
 
