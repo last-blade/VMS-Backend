@@ -1,4 +1,4 @@
-import { apiError, apiResponse, asyncHandler, isObjectIdValid, Plant } from "../../../allImports.js";
+import { apiError, apiResponse, asyncHandler, City, isObjectIdValid, Plant } from "../../../allImports.js";
 import QRCode from "qrcode";
 
 const createPlant = asyncHandler(async (request, response) => {
@@ -36,6 +36,8 @@ const createPlant = asyncHandler(async (request, response) => {
         plantState: plantState,
         plantCity: plantCity,
     });
+
+    await City.findByIdAndUpdate(plantCity, { $inc: { usageCount: 1 } });
 
     const createdPlant = await Plant.findById(newPlant._id);
 
