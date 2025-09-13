@@ -1,4 +1,4 @@
-import { apiError, apiResponse, asyncHandler, Role } from "../../../allImports.js";
+import { apiError, apiResponse, asyncHandler, Company, Role } from "../../../allImports.js";
 
 const createRoles = asyncHandler(async (request, response) => {
     const {roleName} = request.body;
@@ -22,6 +22,8 @@ const createRoles = asyncHandler(async (request, response) => {
         roleCreator: request.user.id,
         company: request.user.company,
     });
+
+    await Company.findByIdAndUpdate(request.user.company, { $inc: { usageCount: 1 } });
 
     return response.status(201)
     .json(

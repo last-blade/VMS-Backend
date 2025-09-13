@@ -1,4 +1,4 @@
-import { apiError, apiResponse, asyncHandler, PlantType } from "../../../allImports.js";
+import { apiError, apiResponse, asyncHandler, Company, PlantType } from "../../../allImports.js";
 
 const createPlantType = asyncHandler(async (request, response) => {
     const {plantType} = request.body;
@@ -22,6 +22,9 @@ const createPlantType = asyncHandler(async (request, response) => {
         plantTypeCreator: request.user.id,
         company: request.user.company,
     });
+
+    await PlantType.findByIdAndUpdate(plantType, { $inc: { usageCount: 1 } });
+    await Company.findByIdAndUpdate(request.user.company, { $inc: { usageCount: 1 } });
 
     return response.status(201)
     .json(

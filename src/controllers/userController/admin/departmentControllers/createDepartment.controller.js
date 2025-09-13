@@ -1,4 +1,4 @@
-import { apiError, apiResponse, asyncHandler, Department, isObjectIdValid } from "../../../allImports.js";
+import { apiError, apiResponse, asyncHandler, Company, Department, isObjectIdValid } from "../../../allImports.js";
 
 const createDeparment = asyncHandler(async (request, response) => {
     const {departmentName, headOfDepartment} = request.body;
@@ -19,6 +19,12 @@ const createDeparment = asyncHandler(async (request, response) => {
         headOfDepartment,
         company: request.user.company,
     });
+
+    await Company.findByIdAndUpdate(request.user.company, {
+        $inc: {
+            usageCount: 1
+        }
+    }, {new: true});
 
     return response.status(201)
     .json(

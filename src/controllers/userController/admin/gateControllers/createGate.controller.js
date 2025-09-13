@@ -1,4 +1,4 @@
-import { apiError, apiResponse, asyncHandler, Gate, isObjectIdValid } from "../../../allImports.js";
+import { apiError, apiResponse, asyncHandler, Company, Gate, isObjectIdValid, Plant } from "../../../allImports.js";
 
 const createGate = asyncHandler(async (request, response) => {
     const {gateName, gateNumber, gateInchargeName, company, plant, gateOpenTime, gateCloseTime, gateSecurity} = request.body;
@@ -36,6 +36,18 @@ const createGate = asyncHandler(async (request, response) => {
         gateSecurity,
         gateCreator: request.user.id,
     });
+
+    await Company.findByIdAndUpdate(request.user.company, {
+        $inc: {
+            usageCount: 1
+        }
+    }, {new: true});
+
+    await Plant.findByIdAndUpdate(plant, {
+        $inc: {
+            usageCount: 1
+        }
+    }, {new: true});
 
     return response.status(201)
     .json(

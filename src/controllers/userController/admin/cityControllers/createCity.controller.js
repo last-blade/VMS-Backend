@@ -1,4 +1,4 @@
-import { apiError, apiResponse, asyncHandler, City, isObjectIdValid, State } from "../../../allImports.js";
+import { apiError, apiResponse, asyncHandler, City, Company, Country, isObjectIdValid, State } from "../../../allImports.js";
 
 const createCity = asyncHandler(async (request, response) => {
     const {cityName, country, state} = request.body;
@@ -27,6 +27,10 @@ const createCity = asyncHandler(async (request, response) => {
         cityCreator: request.user.id,
         company: request.user.company,
     });
+
+    await State.findByIdAndUpdate(state, { $inc: { usageCount: 1 } });
+    await Country.findByIdAndUpdate(country, { $inc: { usageCount: 1 } });
+    await Company.findByIdAndUpdate(request.user.company, { $inc: { usageCount: 1 } });
 
     return response.status(201)
     .json(

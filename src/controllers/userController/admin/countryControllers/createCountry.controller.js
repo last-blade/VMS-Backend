@@ -1,4 +1,4 @@
-import { apiError, apiResponse, asyncHandler, Country } from "../../../allImports.js";
+import { apiError, apiResponse, asyncHandler, Company, Country } from "../../../allImports.js";
 
 const createCountry = asyncHandler(async (request, response) => {
     const {countryName} = request.body;
@@ -22,6 +22,12 @@ const createCountry = asyncHandler(async (request, response) => {
         countryCreator: request.user.id,
         company: request.user.company,
     });
+
+    await Company.findByIdAndUpdate(request.user.company, {
+        $inc: {
+            usageCount: 1
+        }
+    }, {new: true});
 
     return response.status(201)
     .json(

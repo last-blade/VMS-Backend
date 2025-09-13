@@ -1,4 +1,4 @@
-import { asyncHandler, apiError, apiResponse, Area, isObjectIdValid } from "../../../allImports.js";
+import { asyncHandler, apiError, apiResponse, Area, isObjectIdValid, Plant, Company } from "../../../allImports.js";
 
 export const createArea = asyncHandler(async (request, response) => {
   const { areaName, plant } = request.body;
@@ -18,6 +18,18 @@ export const createArea = asyncHandler(async (request, response) => {
       company: request.user.company,
       areaCreator: request.user.id,
     });
+
+    await Plant.findByIdAndUpdate(plant, {
+      $inc: {
+        usageCount: 1
+      }
+    }, {new: true});
+
+    await Company.findByIdAndUpdate(request.user.company, {
+      $inc: {
+        usageCount: 1
+      }
+    }, {new: true});
 
     return response.status(201)
     .json(
