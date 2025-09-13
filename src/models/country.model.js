@@ -27,6 +27,13 @@ const countrySchema = new Schema({
         index: true,
     },
 
+    usageCount: {
+        type: Number,
+        required: true,
+        select: false,
+        trim: true,
+    },
+
 }, {timestamps: true});
 
 countrySchema.index({countryName: 1, company: 1}, {unique: true})

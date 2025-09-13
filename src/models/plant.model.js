@@ -58,6 +58,13 @@ const plantSchema = new Schema({
         trim: true,
     },
 
+    usageCount: {
+        type: Number,
+        required: true,
+        select: false,
+        trim: true,
+    },
+
 }, {timestamps: true});
 
 plantSchema.index({plantName: 1, company: 1, plantCreator: 1}, {unique: 1});

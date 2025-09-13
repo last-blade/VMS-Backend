@@ -64,6 +64,13 @@ const gateSchema = new Schema({
         required: true,
     },
 
+    usageCount: {
+        type: Number,
+        required: true,
+        select: false,
+        trim: true,
+    },
+
 }, {timestamps: true});
 
 export const Gate = mongoose.model("Gate", gateSchema);

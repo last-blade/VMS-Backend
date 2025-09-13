@@ -36,7 +36,14 @@ const companySchema = new Schema({
     isCompanyActive: {
         type: Boolean,
         default: true,
-    }
+    },
+
+    usageCount: {
+        type: Number,
+        required: true,
+        select: false,
+        trim: true,
+    },
 
 }, {timestamps: true});
 

@@ -36,6 +36,13 @@ const departmentSchema = new Schema({
         index: true,
     },
 
+    usageCount: {
+        type: Number,
+        required: true,
+        select: false,
+        trim: true,
+    },
+
 }, {timestamps: true});
 
 departmentSchema.index({departmentName: 1, company: 1}, {unique: true})

@@ -29,6 +29,18 @@ const areaSchema = new Schema({
         index: true,
     },
 
+    isAreaActive: {
+        type: Boolean,
+        default: true,
+    },
+
+    usageCount: {
+        type: Number,
+        required: true,
+        select: false,
+        trim: true,
+    },
+
 }, {timestamps: true});
 
 // Compound unique index

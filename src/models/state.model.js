@@ -34,6 +34,13 @@ const stateSchema = new Schema({
         index: true,
     },
 
+    usageCount: {
+        type: Number,
+        required: true,
+        select: false,
+        trim: true,
+    },
+
 }, {timestamps: true});
 
 stateSchema.index({stateName: 1, company: 1}, {unique: true})

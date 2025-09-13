@@ -38,7 +38,14 @@ const citySchema = new Schema({
         ref: "Company",
         required: true,
         index: true,
-    },    
+    },
+    
+    usageCount: {
+        type: Number,
+        required: true,
+        select: false,
+        trim: true,
+    },
 
 }, {timestamps: true});
 
