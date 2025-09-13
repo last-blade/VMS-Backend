@@ -28,7 +28,7 @@ const editArea = asyncHandler(async (request, response) => {
             areaName, 
             plant
         }
-    });
+    }, {new: true});
 
     return response.status(200)
     .json(
