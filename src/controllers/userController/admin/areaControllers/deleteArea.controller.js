@@ -1,4 +1,4 @@
-import { apiError, apiResponse, Area, asyncHandler, isObjectIdValid } from "../../../allImports";
+import { apiError, apiResponse, Area, asyncHandler, isObjectIdValid } from "../../../allImports.js";
 
 const deleteArea = asyncHandler(async (request, response) => {
     const {areaId} = request.params;
