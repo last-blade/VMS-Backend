@@ -19,13 +19,13 @@ const createPlant = asyncHandler(async (request, response) => {
     // });
 
     //only one plant can exist in a company
-    const foundPlant = await Plant.findOne({
-        company: request.user.company
-    })
+    // const foundPlant = await Plant.findOne({
+    //     company: request.user.company
+    // })
 
-    if(foundPlant){
-        throw new apiError(400, "There can only one plant exist in a company")
-    }
+    // if(foundPlant){
+    //     throw new apiError(400, "There can only one plant exist in a company")
+    // }
 
     const newPlant = await Plant.create({
         plantName,
