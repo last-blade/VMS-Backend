@@ -41,6 +41,7 @@ import { deletePlantType } from "../controllers/userController/admin/plantTypeCo
 import { deletePlant } from "../controllers/userController/admin/plantControllers/deletePlant.controller.js";
 import { deleteDepartment } from "../controllers/userController/admin/departmentControllers/deleteDepartment.controller.js";
 import { deleteGate } from "../controllers/userController/admin/gateControllers/deleteGate.controller.js";
+import { getUsers } from "../controllers/userController/admin/getUsers.controller.js";
 
 const router = Router();
 
@@ -108,5 +109,8 @@ router.route("/appointments/create-appointment").post(authentication, createAppo
 router.route("/appointments/checkin-visitors").post(authentication, scanQrCode);
 router.route("/appointments/checkout-visitors").post(authentication, visitorsCheckout);
 router.route("/appointments/approve-reject-visitors").post(authentication, rejectOrApproveVisitorAppointment);
+
+
+router.route("/fetch-users").get(authentication, getUsers);
 
 export default router;
