@@ -1,6 +1,6 @@
-import { apiError, apiResponse, City, asyncHandler, isObjectIdValid } from "../../../allImports";
+import { apiError, apiResponse, City, asyncHandler, isObjectIdValid } from "../../../allImports.js";
 
-const deleteArea = asyncHandler(async (request, response) => {
+const deleteCity = asyncHandler(async (request, response) => {
     const {cityId} = request.params;
 
     if(!isObjectIdValid(cityId)){
@@ -28,4 +28,4 @@ const deleteArea = asyncHandler(async (request, response) => {
     )
 });
 
-export {deleteArea}
+export {deleteCity}
