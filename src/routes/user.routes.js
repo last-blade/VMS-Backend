@@ -33,6 +33,14 @@ import { visitorsCheckout } from "../controllers/userController/appointmentContr
 import { rejectOrApproveVisitorAppointment } from "../controllers/userController/appointmentControllers/rejectOrApproveVisitorAppointment.controller.js";
 import { deleteArea } from "../controllers/userController/admin/areaControllers/deleteArea.controller.js";
 import { editArea } from "../controllers/userController/admin/areaControllers/editArea.controller.js";
+import { deleteCompany } from "../controllers/userController/admin/companyControllers/deleteCompany.controller.js";
+import { deleteCountry } from "../controllers/userController/admin/countryControllers/deleteCountry.controller.js";
+import { deleteState } from "../controllers/userController/admin/stateController/deleteState.controller.js";
+import { deleteCity } from "../controllers/userController/admin/cityControllers/deleteCity.controller.js";
+import { deletePlantType } from "../controllers/userController/admin/plantTypeControllers/deletePlantType.controller.js";
+import { deletePlant } from "../controllers/userController/admin/plantControllers/deletePlant.controller.js";
+import { deleteDepartment } from "../controllers/userController/admin/departmentControllers/deleteDepartment.controller.js";
+import { deleteGate } from "../controllers/userController/admin/gateControllers/deleteGate.controller.js";
 
 const router = Router();
 
@@ -52,34 +60,42 @@ router.route("/companies/create-company").post(authentication, createComapny);
 router.route("/companies/fetch-companies").get(authentication, getCompanies);
 router.route("/companies/edit-company").patch(authentication, editCompany);
 router.route("/companies/change-company-status").patch(authentication, changeCompanyActiveStatus);
+router.route("/companies/delete-company/:companyId").delete(authentication, deleteCompany);
 
 //Country
 router.route("/countries/create-country").post(authentication, createCountry);
 router.route("/countries/fetch-countries").get(authentication, getCountries);
+router.route("/countries/delete-country/:countryId").delete(authentication, deleteCountry);
 
 //State
 router.route("/states/create-state").post(authentication, createState);
 router.route("/states/fetch-states").get(authentication, getStates);
+router.route("/states/delete-state/:stateId").delete(authentication, deleteState);
 
 //City
 router.route("/cities/create-city").post(authentication, createCity);
 router.route("/cities/fetch-cities").get(authentication, getCities);
+router.route("/cities/delete-city/:cityId").delete(authentication, deleteCity);
 
 //PlantType
 router.route("/plant-types/create-plant-type").post(authentication, createPlantType);
 router.route("/plant-types/fetch-plant-types").get(authentication, getPlantTypes);
+router.route("/plant-types/delete-plant-type/:plantTypeId").delete(authentication, deletePlantType);
 
 //Plant
 router.route("/plants/create-plant").post(authentication, createPlant);
 router.route("/plants/fetch-plants").get(authentication, getPlants);
+router.route("/plants/delete-plant/:plantId").delete(authentication, deletePlant);
 
 //Department
 router.route("/departments/create-department").post(authentication, createDeparment);
 router.route("/departments/fetch-departments").get(authentication, getDepartments);
+router.route("/departments/delete-department/:departmentId").delete(authentication, deleteDepartment);
 
 //Gate
 router.route("/gates/create-gate").post(authentication, createGate);
 router.route("/gates/fetch-gates").get(authentication, getGates);
+router.route("/gates/delete-gate/:gateId").delete(authentication, deleteGate);
 
 //Area
 router.route("/areas/create-area").post(authentication, createArea);
