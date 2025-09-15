@@ -19,6 +19,9 @@ const deleteArea = asyncHandler(async (request, response) => {
 
     await City.findByIdAndDelete(cityId);
 
+    foundCity.usageCount = usageCount - 1;
+    foundCity.save({validateBeforeSave: false});
+
     return response.status(200)
     .json(
         new apiResponse(200, {}, "City deleted successfully")

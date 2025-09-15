@@ -23,6 +23,9 @@ const deleteRoles = asyncHandler(async (request, response) => {
 
     await Role.findByIdAndDelete(roleId);
 
+    foundRole.usageCount = usageCount - 1;
+    foundRole.save({validateBeforeSave: false});
+
     return response.status(200)
     .json(
         new apiResponse(200, {}, "Role deleted successfully")
