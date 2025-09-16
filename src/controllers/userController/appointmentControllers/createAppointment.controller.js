@@ -31,6 +31,7 @@ const createAppointment = asyncHandler(async (request, response) => {
         purposeOfVisit,
         visitors,
         appointmentCreator: request.user.id,
+        company: request.user.company,
     });
 
     return response.status(201)
