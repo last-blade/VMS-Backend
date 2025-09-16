@@ -42,6 +42,7 @@ import { deletePlant } from "../controllers/userController/admin/plantController
 import { deleteDepartment } from "../controllers/userController/admin/departmentControllers/deleteDepartment.controller.js";
 import { deleteGate } from "../controllers/userController/admin/gateControllers/deleteGate.controller.js";
 import { getUsers } from "../controllers/userController/admin/getUsers.controller.js";
+import { getAppointments } from "../controllers/userController/appointmentControllers/getAppointments.controller.js";
 
 const router = Router();
 
@@ -106,6 +107,7 @@ router.route("/areas/delete-area/:areaId").delete(authentication, deleteArea);
 
 //Appointment
 router.route("/appointments/create-appointment").post(authentication, createAppointment);
+router.route("/appointments/fetch-appointments").get(authentication, getAppointments);
 router.route("/appointments/checkin-visitors").post(authentication, scanQrCode);
 router.route("/appointments/checkout-visitors").post(authentication, visitorsCheckout);
 router.route("/appointments/approve-reject-visitors").post(authentication, rejectOrApproveVisitorAppointment);
