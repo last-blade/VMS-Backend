@@ -108,8 +108,8 @@ router.route("/areas/delete-area/:areaId").delete(authentication, deleteArea);
 //Appointment
 router.route("/appointments/create-appointment").post(authentication, createAppointment);
 router.route("/appointments/fetch-appointments").get(authentication, getAppointments);
-router.route("/appointments/checkin-visitors").post(authentication, scanQrCode);
-router.route("/appointments/checkout-visitors").post(authentication, visitorsCheckout);
+router.route("/appointments/checkin-visitors/:appointmentId").post(authentication, scanQrCode);
+router.route("/appointments/checkout-visitors/:appointmentId").post(authentication, visitorsCheckout);
 router.route("/appointments/approve-reject-visitors").post(authentication, rejectOrApproveVisitorAppointment);
 
 
