@@ -96,14 +96,14 @@ const appointmentSchema = new Schema({
 
     checkedInTime: {
         type: Date,
-        required: false,
         index: true,
+        default: null,
     },
 
     checkedOutTime: {
         type: Date,
-        required: false,
         index: true,
+        default: false,
     },
 
     appointmentId: {
@@ -137,7 +137,7 @@ const appointmentSchema = new Schema({
     appointmentCreator: {
         type: Schema.Types.ObjectId,
         ref: "User",
-        required: true,
+        required: false,
         index: true,
     },
 }, {timestamps: true});
