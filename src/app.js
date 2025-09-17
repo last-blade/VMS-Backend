@@ -2,6 +2,7 @@ import express, { urlencoded } from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import "./cron/expireAppointments.js";
 
 dotenv.config({
     path: "./.env"

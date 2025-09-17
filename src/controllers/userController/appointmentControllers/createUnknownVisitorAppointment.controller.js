@@ -1,6 +1,6 @@
-import { apiError, apiResponse, Appointment, asyncHandler, isObjectIdValid } from "../../allImports.js";
+import { apiError, apiResponse, Appointment, asyncHandler, isObjectIdValid, Plant } from "../../allImports.js";
 
-const createAppointment = asyncHandler(async (request, response) => {
+const createUnknownVisitorAppointment = asyncHandler(async (request, response) => {
     const {plant, department, personToVisit, areaToVisit, appointmentDate, appointmentValidTill, purposeOfVisit, visitors} = request.body;
 
     if([plant, department, personToVisit, areaToVisit].some(input => !isObjectIdValid(input))){
@@ -21,6 +21,12 @@ const createAppointment = asyncHandler(async (request, response) => {
         }
     });
 
+    const foundPlant = await Plant.findById(plant).populate("company", "companyName");
+
+    if(!foundPlant){
+        throw new apiError(404, "Plant not found")
+    }
+
     await Appointment.create({
         plant,
         department,
@@ -30,15 +36,13 @@ const createAppointment = asyncHandler(async (request, response) => {
         appointmentValidTill,
         purposeOfVisit,
         visitors,
-        appointmentCreator: request.user.id,
-        company: request.user.company,
+        company: foundPlant?.company.companyName,
     });
 
     return response.status(201)
     .json(
         new apiResponse(201, {}, "Appointment created successfully")
     )
+})
 
-});
-
-export {createAppointment}
+export {createUnknownVisitorAppointment}
