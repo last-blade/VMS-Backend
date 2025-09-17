@@ -16,7 +16,7 @@ const scanQrCode = asyncHandler(async (request, response) => {
 
     //Step 2: Validate Appointment
     const appointment = await Appointment.findOne({
-        _id: appointmentId,
+        appointmentId,
         plant: plantId,
     });
 
