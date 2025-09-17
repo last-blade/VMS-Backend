@@ -5,11 +5,11 @@ const visitorsCheckout = asyncHandler(async (request, response) => {
 
     const checkoutDate = new Date();
 
-    if(!isObjectIdValid(appointmentId)){
-        throw new apiError(400, "Appointment ID is invalid")
+    if(!appointmentId || appointmentId.trim() === ""){
+        throw new apiError(400, "Appointment ID is required")
     }
 
-    const foundAppointment = await Appointment.findById(appointmentId);
+    const foundAppointment = await Appointment.findOne({appointmentId});
 
     if (!foundAppointment) {
         throw new apiError(404, "Appointment not found");
@@ -32,7 +32,7 @@ const visitorsCheckout = asyncHandler(async (request, response) => {
         throw new apiError(400, "Visitor pass is expired")
     }
 
-    await Appointment.findByIdAndUpdate(appointmentId, {
+    await Appointment.findOneAndUpdate(appointmentId, {
         $set: {
             checkedOutTime: checkoutDate,
             isAppointmentActive: false,
