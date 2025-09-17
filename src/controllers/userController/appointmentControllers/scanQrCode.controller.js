@@ -24,7 +24,7 @@ const scanQrCode = asyncHandler(async (request, response) => {
         // Step 2: Find appointment linked to this plant
         appointment = await Appointment.findOne({
             plant: plantId,
-            _id: appointmentId || undefined,
+            appointmentId: appointmentId || undefined,
         });
 
         if (!appointment) {
@@ -40,7 +40,7 @@ const scanQrCode = asyncHandler(async (request, response) => {
 
     // CASE 2: MANUAL CHECK-IN
     else if (appointmentId) {
-        appointment = await Appointment.findById(appointmentId);
+        appointment = await Appointment.findOne({appointmentId});
 
         if (!appointment) {
             throw new apiError(404, "Appointment not found");
