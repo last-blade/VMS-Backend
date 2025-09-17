@@ -32,7 +32,7 @@ const visitorsCheckout = asyncHandler(async (request, response) => {
         throw new apiError(400, "Visitor pass is expired")
     }
 
-    await Appointment.findOneAndUpdate(appointmentId, {
+    await Appointment.findOneAndUpdate({appointmentId}, {
         $set: {
             checkedOutTime: checkoutDate,
             isAppointmentActive: false,
