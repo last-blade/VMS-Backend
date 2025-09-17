@@ -53,6 +53,7 @@ const scanQrCode = asyncHandler(async (request, response) => {
 
     //Step 4: Fresh check-in
     appointment.checkedInTime = now;
+    appointment.isAppointmentActive = true;
     await appointment.save({ validateBeforeSave: false });
 
     return response.json(new apiResponse(200, appointment, "Checked in successfully"));
