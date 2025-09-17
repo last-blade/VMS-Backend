@@ -96,12 +96,14 @@ const appointmentSchema = new Schema({
 
     checkedInTime: {
         type: Date,
+        required: false,
         index: true,
         default: null,
     },
 
     checkedOutTime: {
         type: Date,
+        required: false,
         index: true,
         default: false,
     },
