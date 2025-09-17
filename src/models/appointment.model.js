@@ -142,11 +142,24 @@ const appointmentSchema = new Schema({
         required: false,
         index: true,
     },
+
+    // checkedInBy: {
+    //     type: Schema.Types.ObjectId,
+    //     ref: "User",
+    //     default: null,
+    // },
+
+    // checkedOutBy: {
+    //     type: Schema.Types.ObjectId,
+    //     ref: "User",
+    //     default: null,
+    // },
 }, {timestamps: true});
 
 
 appointmentSchema.pre("save", function(next){
     const today = Date.now();
+    today.setHours(0, 0, 0, 0);
     if(this.appointmentDate < today){
         return next(new Error("Cant't select the past date for appointment"))
     }
