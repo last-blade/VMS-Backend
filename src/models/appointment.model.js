@@ -105,7 +105,7 @@ const appointmentSchema = new Schema({
         type: Date,
         required: false,
         index: true,
-        default: false,
+        default: null,
     },
 
     appointmentId: {
