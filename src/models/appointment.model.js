@@ -157,22 +157,29 @@ const appointmentSchema = new Schema({
 }, {timestamps: true});
 
 
-appointmentSchema.pre("save", function(next){
-    const today = Date.now();
-    today.setHours(0, 0, 0, 0);
-    if(this.appointmentDate < today){
-        return next(new Error("Cant't select the past date for appointment"))
-    }
+appointmentSchema.pre("save", function(next) {
+  if (!this.appointmentDate) return next(new Error("appointmentDate is required"));
 
-    if(this.appointmentValidTill && this.appointmentValidTill < this.appointmentDate){
-        return next(new Error("Appointment Valid Till cannot be before appointmentDate"))
-    }
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
 
-    if (!this.appointmentId) {
-        this.appointmentId = `APT-${this._id.toString().slice(-8).toUpperCase()}`;
-    }
+  const appt = new Date(this.appointmentDate);
+  appt.setHours(0, 0, 0, 0);
 
-    next();
-})
+  if (appt < today) {
+    return next(new Error("Can't select the past date for appointment"));
+  }
+
+  if (this.appointmentValidTill && new Date(this.appointmentValidTill) < new Date(this.appointmentDate)) {
+    return next(new Error("Appointment Valid Till cannot be before appointmentDate"));
+  }
+
+  if (!this.appointmentId) {
+    this.appointmentId = `APT-${this._id.toString().slice(-8).toUpperCase()}`;
+  }
+
+  next();
+});
+
 
 export const Appointment = mongoose.model("Appointment", appointmentSchema);
