@@ -7,7 +7,7 @@ const deleteCompany = asyncHandler(async (request, response) => {
         throw new apiError(400, "Company ID is not valid")
     }
 
-    const foundCompany = await Company.findById(companyId);
+    const foundCompany = await Company.findById(companyId).select("usageCount");
 
     if(!foundCompany){
         throw new apiError(404, "Company not found, maybe deleted")
