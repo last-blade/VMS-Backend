@@ -13,7 +13,6 @@ const createState = asyncHandler(async (request, response) => {
 
     const foundState = await State.findOne({
         stateName,
-        stateCreator: request.user.id,
         company: request.user.company,
     });
 

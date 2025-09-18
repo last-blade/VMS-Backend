@@ -23,6 +23,15 @@ const editRoles = asyncHandler(async (request, response) => {
         throw new apiError(404, "Role not found or maybe deleted")
     }
 
+    const isRoleExist = await Role.findOne({
+        roleName,
+        company: request.user.company,
+    })
+
+    if(isRoleExist){
+        throw new apiError(400, "Role name already exist in you company")
+    }
+
     await Role.findByIdAndUpdate(roleId, {
         $set: {
             roleName
