@@ -37,7 +37,7 @@ const stateSchema = new Schema({
     usageCount: {
         type: Number,
         required: true,
-        select: false,
+        // select: false,
         default: 0,
     },
 
