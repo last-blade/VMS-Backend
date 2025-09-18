@@ -43,6 +43,7 @@ import { deleteDepartment } from "../controllers/userController/admin/department
 import { deleteGate } from "../controllers/userController/admin/gateControllers/deleteGate.controller.js";
 import { getUsers } from "../controllers/userController/admin/getUsers.controller.js";
 import { getAppointments } from "../controllers/userController/appointmentControllers/getAppointments.controller.js";
+import { getUserNameByAppointmentId } from "../controllers/userController/admin/getUserNameByAppointmentId.controller.js";
 
 const router = Router();
 
@@ -114,5 +115,6 @@ router.route("/appointments/approve-reject-visitors").post(authentication, rejec
 
 
 router.route("/fetch-users").get(authentication, getUsers);
+router.route("/fetch-visitor-by-aptid/:appointmentId").get(authentication, getUserNameByAppointmentId);
 
 export default router;
