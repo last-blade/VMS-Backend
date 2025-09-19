@@ -1,4 +1,4 @@
-import { apiError, apiResponse, asyncHandler, Company, PlantType } from "../../../allImports.js";
+import { apiError, apiResponse, asyncHandler, isObjectIdValid, PlantType } from "../../../allImports.js";
 
 const editPlantType = asyncHandler(async (request, response) => {
     const {plantType} = request.body;
