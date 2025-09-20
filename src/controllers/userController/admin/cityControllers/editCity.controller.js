@@ -1,4 +1,4 @@
-import { apiError, apiResponse, asyncHandler, City, isObjectIdValid } from "../../../allImports.js";
+import { apiError, apiResponse, asyncHandler, City, Country, isObjectIdValid, State } from "../../../allImports.js";
 
 const editCity = asyncHandler(async (request, response) => {
     const {cityId} = request.params;
@@ -23,6 +23,22 @@ const editCity = asyncHandler(async (request, response) => {
 
     if(foundCity){
         throw new apiError(400, "City name already exists in your company")
+    }
+
+    if(foundCity.country.toString() !== country.toString()){
+        await Country.findByIdAndUpdate(country, {
+            $inc: {
+                usageCount: -1
+            }
+        }, {new: true})
+    }
+
+    if(foundCity.state.toString() !== state.toString()){
+        await State.findByIdAndUpdate(state, {
+            $inc: {
+                usageCount: -1
+            }
+        }, {new: true})
     }
 
     await City.findByIdAndUpdate(cityId, {

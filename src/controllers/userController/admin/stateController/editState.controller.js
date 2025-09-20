@@ -38,6 +38,14 @@ const editState = asyncHandler(async (request, response) => {
         }
     });
 
+    if(foundState.country.toString() !== country.toString()){
+        await Country.findByIdAndUpdate(country, {
+            $inc: {
+                usageCount: -1
+            }
+        }, {new: true})
+    }
+
     return response.status(200)
     .json(
         new apiResponse(200, {}, "State updated successfully")

@@ -1,4 +1,4 @@
-import { apiError, apiResponse, asyncHandler, Gate, isObjectIdValid } from "../../../allImports.js";
+import { apiError, apiResponse, asyncHandler, Gate, isObjectIdValid, Plant } from "../../../allImports.js";
 
 const editGate = asyncHandler(async (request, response) => {
     const {gateName, gateNumber, gateInchargeName, plant, gateOpenTime, gateCloseTime, gateSecurity} = request.body;
@@ -39,6 +39,14 @@ const editGate = asyncHandler(async (request, response) => {
         gateCloseTime,
         gateSecurity,
     }, {new: true});
+
+    if(foundGate.plant.toString() !== plant.toString()){
+        await Plant.findByIdAndUpdate(plant, {
+            $inc: {
+                usageCount: -1
+            }
+        }, {new: true})
+    }
 
     return response.status(200)
     .json(

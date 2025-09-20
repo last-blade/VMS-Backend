@@ -23,7 +23,6 @@ const createPlantType = asyncHandler(async (request, response) => {
         company: request.user.company,
     });
 
-    await PlantType.findByIdAndUpdate(plantType, { $inc: { usageCount: 1 } });
     await Company.findByIdAndUpdate(request.user.company, { $inc: { usageCount: 1 } });
 
     return response.status(201)

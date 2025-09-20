@@ -1,4 +1,4 @@
-import { apiError, apiResponse, Area, asyncHandler, isObjectIdValid } from "../../../allImports.js";
+import { apiError, apiResponse, Area, asyncHandler, isObjectIdValid, Plant } from "../../../allImports.js";
 
 const editArea = asyncHandler(async (request, response) => {
     const {areaId} = request.params;
@@ -21,6 +21,14 @@ const editArea = asyncHandler(async (request, response) => {
 
     if(!foundArea){
         throw new apiError(404, "Area not found, maybe deleted")
+    }
+
+    if(foundArea.plant.toString() !== plant.toString()){
+        await Plant.findByIdAndUpdate(plant, {
+            $inc: {
+                usageCount: -1
+            }
+        }, {new: true})
     }
 
     await Area.findByIdAndUpdate(areaId, {
