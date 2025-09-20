@@ -19,8 +19,8 @@ const deleteCompany = asyncHandler(async (request, response) => {
 
     await Company.findByIdAndDelete(companyId);
 
-    foundCompany.usageCount = foundCompany.usageCount - 1;
-    foundCompany.save({validateBeforeSave: false});
+    // foundCompany.usageCount = foundCompany.usageCount - 1;
+    // foundCompany.save({validateBeforeSave: false});
 
     return response.status(200)
     .json(

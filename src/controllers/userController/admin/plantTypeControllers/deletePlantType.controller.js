@@ -19,8 +19,8 @@ const deletePlantType = asyncHandler(async (request, response) => {
 
     await PlantType.findByIdAndDelete(plantTypeId);
 
-    foundPlantType.usageCount = foundPlantType.usageCount - 1;
-    foundPlantType.save({validateBeforeSave: false});
+    // foundPlantType.usageCount = foundPlantType.usageCount - 1;
+    // foundPlantType.save({validateBeforeSave: false});
 
     return response.status(200)
     .json(

@@ -19,8 +19,8 @@ const deleteCity = asyncHandler(async (request, response) => {
 
     await City.findByIdAndDelete(cityId);
 
-    foundCity.usageCount = foundCity.usageCount - 1;
-    foundCity.save({validateBeforeSave: false});
+    // foundCity.usageCount = foundCity.usageCount - 1;
+    // foundCity.save({validateBeforeSave: false});
 
     return response.status(200)
     .json(

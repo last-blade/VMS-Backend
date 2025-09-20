@@ -19,8 +19,8 @@ const deleteDepartment = asyncHandler(async (request, response) => {
 
     await Department.findByIdAndDelete(departmentId);
 
-    foundDepartment.usageCount = foundDepartment.usageCount - 1;
-    foundDepartment.save({validateBeforeSave: false});
+    // foundDepartment.usageCount = foundDepartment.usageCount - 1;
+    // foundDepartment.save({validateBeforeSave: false});
 
     return response.status(200)
     .json(

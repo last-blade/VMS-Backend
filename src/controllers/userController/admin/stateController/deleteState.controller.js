@@ -19,8 +19,8 @@ const deleteState = asyncHandler(async (request, response) => {
 
     await State.findByIdAndDelete(stateId);
 
-    foundState.usageCount = foundState.usageCount - 1;
-    foundState.save({validateBeforeSave: false});
+    // foundState.usageCount = foundState.usageCount - 1;
+    // foundState.save({validateBeforeSave: false});
 
     return response.status(200)
     .json(

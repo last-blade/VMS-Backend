@@ -19,8 +19,8 @@ const deleteGate = asyncHandler(async (request, response) => {
 
     await Gate.findByIdAndDelete(gateId);
 
-    foundGate.usageCount = foundGate.usageCount - 1;
-    foundGate.save({validateBeforeSave: false});
+    // foundGate.usageCount = foundGate.usageCount - 1;
+    // foundGate.save({validateBeforeSave: false});
 
     return response.status(200)
     .json(

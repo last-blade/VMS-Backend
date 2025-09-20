@@ -19,8 +19,8 @@ const deleteCountry = asyncHandler(async (request, response) => {
 
     await Country.findByIdAndDelete(countryId);
 
-    foundCountry.usageCount = foundCountry.usageCount - 1;
-    foundCountry.save({validateBeforeSave: false});
+    // foundCountry.usageCount = foundCountry.usageCount - 1;
+    // foundCountry.save({validateBeforeSave: false});
 
     return response.status(200)
     .json(

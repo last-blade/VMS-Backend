@@ -23,8 +23,8 @@ const deleteRoles = asyncHandler(async (request, response) => {
 
     await Role.findByIdAndDelete(roleId);
 
-    foundRole.usageCount = foundRole.usageCount - 1;
-    foundRole.save({validateBeforeSave: false});
+    // foundRole.usageCount = foundRole.usageCount - 1;
+    // foundRole.save({validateBeforeSave: false});
 
     return response.status(200)
     .json(
