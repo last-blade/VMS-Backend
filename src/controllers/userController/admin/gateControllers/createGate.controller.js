@@ -11,7 +11,7 @@ const createGate = asyncHandler(async (request, response) => {
         throw new apiError(400, "Gate number required")
     }
 
-    if([gateInchargeName, company, plant, gateSecurity].some(inputField => !isObjectIdValid(inputField))){
+    if([gateInchargeName, plant, gateSecurity].some(inputField => !isObjectIdValid(inputField))){
         throw new apiError(400, "Object IDs are not valid")
     }
 
