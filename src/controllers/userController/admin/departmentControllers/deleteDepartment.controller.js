@@ -7,7 +7,7 @@ const deleteDepartment = asyncHandler(async (request, response) => {
         throw new apiError(400, "Department ID is not valid")
     }
 
-    const foundDepartment = await Department.findById(departmentId);
+    const foundDepartment = await Department.findById(departmentId).select("+usageCount");
 
     if(!foundDepartment){
         throw new apiError(404, "Department not found, maybe deleted")
@@ -19,7 +19,7 @@ const deleteDepartment = asyncHandler(async (request, response) => {
 
     await Department.findByIdAndDelete(departmentId);
 
-    foundDepartment.usageCount = usageCount - 1;
+    foundDepartment.usageCount = foundDepartment.usageCount - 1;
     foundDepartment.save({validateBeforeSave: false});
 
     return response.status(200)

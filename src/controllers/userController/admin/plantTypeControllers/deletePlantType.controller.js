@@ -7,7 +7,7 @@ const deletePlantType = asyncHandler(async (request, response) => {
         throw new apiError(400, "PlantType ID is not valid")
     }
 
-    const foundPlantType = await PlantType.findById(plantTypeId);
+    const foundPlantType = await PlantType.findById(plantTypeId).select("+usageCount");
 
     if(!foundPlantType){
         throw new apiError(404, "PlantType not found, maybe deleted")
@@ -19,7 +19,7 @@ const deletePlantType = asyncHandler(async (request, response) => {
 
     await PlantType.findByIdAndDelete(plantTypeId);
 
-    foundPlantType.usageCount = usageCount - 1;
+    foundPlantType.usageCount = foundPlantType.usageCount - 1;
     foundPlantType.save({validateBeforeSave: false});
 
     return response.status(200)

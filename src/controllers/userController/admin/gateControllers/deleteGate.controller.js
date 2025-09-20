@@ -7,7 +7,7 @@ const deleteGate = asyncHandler(async (request, response) => {
         throw new apiError(400, "Gate ID is not valid")
     }
 
-    const foundGate = await Gate.findById(gateId);
+    const foundGate = await Gate.findById(gateId).select("+usageCount");
 
     if(!foundGate){
         throw new apiError(404, "Gate not found, maybe deleted")
@@ -19,7 +19,7 @@ const deleteGate = asyncHandler(async (request, response) => {
 
     await Gate.findByIdAndDelete(gateId);
 
-    foundGate.usageCount = usageCount - 1;
+    foundGate.usageCount = foundGate.usageCount - 1;
     foundGate.save({validateBeforeSave: false});
 
     return response.status(200)

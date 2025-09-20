@@ -7,7 +7,7 @@ const deleteState = asyncHandler(async (request, response) => {
         throw new apiError(400, "State ID is not valid")
     }
 
-    const foundState = await State.findById(stateId);
+    const foundState = await State.findById(stateId).select("+usageCount");
 
     if(!foundState){
         throw new apiError(404, "State not found, maybe deleted")
@@ -19,7 +19,7 @@ const deleteState = asyncHandler(async (request, response) => {
 
     await State.findByIdAndDelete(stateId);
 
-    foundState.usageCount = usageCount - 1;
+    foundState.usageCount = foundState.usageCount - 1;
     foundState.save({validateBeforeSave: false});
 
     return response.status(200)

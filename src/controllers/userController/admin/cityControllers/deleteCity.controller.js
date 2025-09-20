@@ -7,7 +7,7 @@ const deleteCity = asyncHandler(async (request, response) => {
         throw new apiError(400, "City ID is not valid")
     }
 
-    const foundCity = await City.findById(cityId);
+    const foundCity = await City.findById(cityId).select("+usageCount");
 
     if(!foundCity){
         throw new apiError(404, "City not found, maybe deleted")
@@ -19,7 +19,7 @@ const deleteCity = asyncHandler(async (request, response) => {
 
     await City.findByIdAndDelete(cityId);
 
-    foundCity.usageCount = usageCount - 1;
+    foundCity.usageCount = foundCity.usageCount - 1;
     foundCity.save({validateBeforeSave: false});
 
     return response.status(200)

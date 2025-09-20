@@ -7,7 +7,7 @@ const deleteCountry = asyncHandler(async (request, response) => {
         throw new apiError(400, "Country ID is not valid")
     }
 
-    const foundCountry = await Country.findById(countryId);
+    const foundCountry = await Country.findById(countryId).select("+usageCount");
 
     if(!foundCountry){
         throw new apiError(404, "Country not found, maybe deleted")
@@ -19,7 +19,7 @@ const deleteCountry = asyncHandler(async (request, response) => {
 
     await Country.findByIdAndDelete(countryId);
 
-    foundCountry.usageCount = usageCount - 1;
+    foundCountry.usageCount = foundCountry.usageCount - 1;
     foundCountry.save({validateBeforeSave: false});
 
     return response.status(200)

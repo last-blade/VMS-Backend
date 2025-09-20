@@ -7,7 +7,7 @@ const deleteArea = asyncHandler(async (request, response) => {
         throw new apiError(400, "Area ID is not valid")
     }
 
-    const foundArea = await Area.findById(areaId);
+    const foundArea = await Area.findById(areaId).select("usageCount");
 
     if(!foundArea){
         throw new apiError(404, "Area not found, maybe deleted")
@@ -19,7 +19,7 @@ const deleteArea = asyncHandler(async (request, response) => {
 
     await Area.findByIdAndDelete(areaId);
 
-    foundArea.usageCount = usageCount - 1;
+    foundArea.usageCount = foundArea.usageCount - 1;
     foundArea.save({validateBeforeSave: false});
 
     return response.status(200)

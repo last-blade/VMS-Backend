@@ -11,7 +11,7 @@ const deleteRoles = asyncHandler(async (request, response) => {
         throw new apiError(400, "Role ID is invalid")
     }
 
-    const foundRole = await Role.findById(roleId);
+    const foundRole = await Role.findById(roleId).select("+usageCount");
 
     if(!foundRole){
         throw new apiError(404, "Role not found or maybe deleted")
@@ -23,7 +23,7 @@ const deleteRoles = asyncHandler(async (request, response) => {
 
     await Role.findByIdAndDelete(roleId);
 
-    foundRole.usageCount = usageCount - 1;
+    foundRole.usageCount = foundRole.usageCount - 1;
     foundRole.save({validateBeforeSave: false});
 
     return response.status(200)
