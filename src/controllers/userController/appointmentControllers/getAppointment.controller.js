@@ -17,6 +17,14 @@ const getAppointment = asyncHandler(async (request, response) => {
         throw new apiError(404, "Appointment not found, maybe expired")
     }
 
+    if(foundAppointment.appointmentStatus === "Rejected"){
+        throw new apiError(400, "This appointment is rejected")
+    }
+
+    if(!foundAppointment.isAppointmentActive || foundAppointment.checkedInTime){
+        throw new apiError(400, "This appointment is expired")
+    }
+
     return response.status(200)
     .json(
         new apiResponse(200, foundAppointment, "Appointment fetched successfully")
