@@ -51,6 +51,7 @@ import { editPlantType } from "../controllers/userController/admin/plantTypeCont
 import { editPlant } from "../controllers/userController/admin/plantControllers/editPlant.controller.js";
 import { editDepartment } from "../controllers/userController/admin/departmentControllers/editDepartment.controller.js";
 import { editGate } from "../controllers/userController/admin/gateControllers/editGate.controller.js";
+import { getAppointment } from "../controllers/userController/appointmentControllers/getAppointment.controller.js";
 
 const router = Router();
 
@@ -126,6 +127,7 @@ router.route("/appointments/fetch-appointments").get(authentication, getAppointm
 router.route("/appointments/checkin-visitors/:appointmentId").post(authentication, scanQrCode);
 router.route("/appointments/checkout-visitors/:appointmentId").post(authentication, visitorsCheckout);
 router.route("/appointments/approve-reject-visitors").post(authentication, rejectOrApproveVisitorAppointment);
+router.route("/appointments/:appointmentId").get(getAppointment);
 
 
 router.route("/fetch-users").get(authentication, getUsers);
