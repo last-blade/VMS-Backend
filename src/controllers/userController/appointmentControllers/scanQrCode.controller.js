@@ -31,7 +31,7 @@ const scanQrCode = asyncHandler(async (request, response) => {
             return response.json(
                 new apiResponse(
                     200,
-                    { redirectTo: `/visitor-form/${plantId}` },
+                    { redirectTo: `https://vms-frontend-pied.vercel.app/visitorform` },
                     "No appointment found, redirect to visitor form"
                 )
             );
