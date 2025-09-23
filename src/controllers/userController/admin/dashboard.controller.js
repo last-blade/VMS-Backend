@@ -3,18 +3,16 @@ import { apiResponse, Appointment, asyncHandler } from "../../allImports.js";
 
 const dashboard = asyncHandler(async (request, response) => {
 
-    const totalAppointmentStatusCount = await Appointment.aggregate([
+    const totalPassIssued = await Appointment.aggregate([
         {
             $match: {
-                plant: new mongoose.Types.ObjectId(request.user.plant)
+                plant: new mongoose.Types.ObjectId(request.user.plant),
+                appointmentStatus: "Approved"
             }
         },
 
         {
-            $group: {
-                _id: "$appointmentStatus",
-                appointmentStatusCount: {$sum: 1}
-            }
+            $count: "totalVisitorsPassIssued"
         },
     ]);
 
@@ -85,7 +83,7 @@ const dashboard = asyncHandler(async (request, response) => {
 
     let dashboardData = {};
 
-    dashboardData.totalAppointmentStatusCount = totalAppointmentStatusCount;
+    dashboardData.totalPassIssued = totalPassIssued;
     dashboardData.totalVisitorsInsideCompany = totalVisitorsInsideCompany;
     dashboardData.totalCheckedInVisitors = totalCheckedInVisitors;
     dashboardData.totalCheckedOutVisitors = totalCheckedOutVisitors;
