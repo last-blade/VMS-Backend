@@ -119,7 +119,6 @@ const appointmentSchema = new Schema({
     appointmentStatus: {
         type: String,
         enum: ["Approved", "Rejected"],
-        default: "Rejected",
         index: true,
     },
 
