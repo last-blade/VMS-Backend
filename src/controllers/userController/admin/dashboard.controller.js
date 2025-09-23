@@ -3,11 +3,18 @@ import { apiResponse, Appointment, asyncHandler } from "../../allImports.js";
 
 const dashboard = asyncHandler(async (request, response) => {
 
+    const startOfDay = new Date();
+    startOfDay.setHours(0, 0, 0, 0);
+
+    const endOfDay = new Date();
+    endOfDay.setHours(23, 59, 59, 999);
+
     const totalPassIssued = await Appointment.aggregate([
         {
             $match: {
                 plant: new mongoose.Types.ObjectId(request.user.plant),
-                appointmentStatus: "Approved"
+                appointmentStatus: "Approved",
+                createdAt: { $gte: startOfDay, $lte: endOfDay },
             }
         },
 
@@ -20,7 +27,8 @@ const dashboard = asyncHandler(async (request, response) => {
         {
             $match: {
                 plant: new mongoose.Types.ObjectId(request.user.plant),
-                isAppointmentActive: true
+                isAppointmentActive: true,
+                createdAt: { $gte: startOfDay, $lte: endOfDay },
             }
         },
 
@@ -33,7 +41,8 @@ const dashboard = asyncHandler(async (request, response) => {
         {
             $match: {
                 plant: new mongoose.Types.ObjectId(request.user.plant),
-                 checkedInTime: { $exists: true, $ne: null }
+                checkedInTime: { $exists: true, $ne: null },
+                createdAt: { $gte: startOfDay, $lte: endOfDay },
             }
         },
 
@@ -46,7 +55,8 @@ const dashboard = asyncHandler(async (request, response) => {
         {
             $match: {
                 plant: new mongoose.Types.ObjectId(request.user.plant),
-                checkedOutTime: { $exists: true, $ne: null }
+                checkedOutTime: { $exists: true, $ne: null },
+                createdAt: { $gte: startOfDay, $lte: endOfDay },
             }
         },
 
@@ -59,6 +69,7 @@ const dashboard = asyncHandler(async (request, response) => {
         {
             $match: {
                 plant: new mongoose.Types.ObjectId(request.user.plant),
+                createdAt: { $gte: startOfDay, $lte: endOfDay },
             }
         },
 
@@ -71,7 +82,8 @@ const dashboard = asyncHandler(async (request, response) => {
         {
             $match: {
                 plant: new mongoose.Types.ObjectId(request.user.plant),
-                appointmentStatus: {$exists: true, $ne: ["Rejected", "Approved"]}
+                appointmentStatus: {$exists: true, $ne: ["Rejected", "Approved"]},
+                createdAt: { $gte: startOfDay, $lte: endOfDay },
             }
         },
 
