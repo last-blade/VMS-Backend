@@ -53,6 +53,7 @@ import { editDepartment } from "../controllers/userController/admin/departmentCo
 import { editGate } from "../controllers/userController/admin/gateControllers/editGate.controller.js";
 import { getAppointment } from "../controllers/userController/appointmentControllers/getAppointment.controller.js";
 import { dashboard } from "../controllers/userController/admin/dashboard.controller.js";
+import { recentActivities } from "../controllers/userController/admin/recentActivities.controller.js";
 
 const router = Router();
 
@@ -133,6 +134,7 @@ router.route("/appointments/:appointmentId").get(getAppointment);
 
 //Dashboard
 router.route("/dashboard/countings").get(authentication, dashboard);
+router.route("/dashboard/activities").get(authentication, recentActivities);
 
 router.route("/fetch-users").get(authentication, getUsers);
 router.route("/fetch-visitor-by-aptid/:appointmentId").get(authentication, getUserNameByAppointmentId);
