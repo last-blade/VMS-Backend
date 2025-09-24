@@ -81,6 +81,11 @@ const appointmentSchema = new Schema({
                 lowercase: true,
             },
 
+            userImage: {
+                type: String,
+                required: false,
+            },
+
             belongings: [
                 {
                     assetName: {
