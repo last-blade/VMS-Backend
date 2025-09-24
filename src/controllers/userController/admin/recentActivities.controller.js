@@ -12,7 +12,8 @@ const recentActivities = asyncHandler(async (request, response) => {
 
       {
         $project: {
-            visitors: 1
+            visitors: 1,
+            createdAt: 1,
         }
       }, 
 
@@ -36,7 +37,8 @@ const recentActivities = asyncHandler(async (request, response) => {
 
       {
         $project: {
-            visitors: 1
+            visitors: 1,
+            createdAt: 1,
         }
       },    
 
