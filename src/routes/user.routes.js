@@ -54,6 +54,7 @@ import { editGate } from "../controllers/userController/admin/gateControllers/ed
 import { getAppointment } from "../controllers/userController/appointmentControllers/getAppointment.controller.js";
 import { dashboard } from "../controllers/userController/admin/dashboard.controller.js";
 import { recentActivities } from "../controllers/userController/admin/recentActivities.controller.js";
+import { upload } from "../utils/multer.js";
 
 const router = Router();
 
@@ -124,7 +125,7 @@ router.route("/areas/edit-area/:areaId").patch(authentication, editArea);
 router.route("/areas/delete-area/:areaId").delete(authentication, deleteArea);
 
 //Appointment
-router.route("/appointments/create-appointment").post(authentication, createAppointment);
+router.route("/appointments/create-appointment").post(authentication, upload.fields([{name: "userImage", maxCount: 5}]),createAppointment);
 router.route("/appointments/fetch-appointments").get(authentication, getAppointments);
 router.route("/appointments/checkin-visitors/:appointmentId").post(authentication, scanQrCode);
 router.route("/appointments/checkout-visitors/:appointmentId").post(authentication, visitorsCheckout);

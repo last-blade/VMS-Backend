@@ -1,3 +1,4 @@
+import { uploadOnCloudinary } from "../../../utils/cloudinary.js";
 import { apiError, apiResponse, Appointment, asyncHandler, isObjectIdValid } from "../../allImports.js";
 
 const createAppointment = asyncHandler(async (request, response) => {
@@ -20,6 +21,16 @@ const createAppointment = asyncHandler(async (request, response) => {
             throw new apiError(400, `Visitor ${index + 1}: mobile and fullname are required`);
         }
     });
+
+    const userImageLocalPath = request?.files?.userImage[0]?.path;
+
+    if(userImageLocalPath){
+        const userImage = await uploadOnCloudinary(userImageLocalPath);
+        visitors = visitors.map(v => ({
+            ...v,
+            userImage: userImage?.url
+        }))
+    }
 
     await Appointment.create({
         plant,
