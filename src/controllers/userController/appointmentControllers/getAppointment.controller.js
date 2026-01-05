@@ -12,6 +12,7 @@ const getAppointment = asyncHandler(async (request, response) => {
     .populate("personToVisit", "fullname")
     .populate("areaToVisit", "areaName")
     .populate("appointmentCreator", "fullname")
+    .populate("company", "companyName")
 
     if(!foundAppointment){
         throw new apiError(404, "Appointment not found, maybe expired")
@@ -21,7 +22,10 @@ const getAppointment = asyncHandler(async (request, response) => {
         throw new apiError(400, "This appointment is rejected")
     }
 
-    if(!foundAppointment.isAppointmentActive || foundAppointment.checkedInTime){
+    // if(!foundAppointment.isAppointmentActive || foundAppointment.checkedInTime){
+    //     throw new apiError(400, "This appointment is expired")
+    // }
+    if(!foundAppointment.isAppointmentActive){
         throw new apiError(400, "This appointment is expired")
     }
 
