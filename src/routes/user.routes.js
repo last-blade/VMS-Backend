@@ -127,7 +127,7 @@ router.route("/areas/delete-area/:areaId").delete(authentication, deleteArea);
 //Appointment
 router.route("/appointments/create-appointment").post(authentication, upload.fields([{name: "userImage", maxCount: 5}]),createAppointment);
 router.route("/appointments/fetch-appointments").get(authentication, getAppointments);
-router.route("/appointments/checkin-visitors/:appointmentId").post(authentication, scanQrCode);
+router.route("/appointments/checkin-visitors/:appointmentId").post(scanQrCode);
 router.route("/appointments/checkout-visitors/:appointmentId").post(visitorsCheckout);
 router.route("/appointments/approve-reject-visitors").post(authentication, rejectOrApproveVisitorAppointment);
 router.route("/appointments/:appointmentId").get(getAppointment);
