@@ -31,7 +31,7 @@ console.log("foundAppointment", foundAppointment)
         languageCode: "en",
         urlButton: {
           index: 0,
-          param: encodeURIComponent(foundAppointment.appointmentId),
+          param: foundAppointment.appointmentId,
         },
       });
     }
