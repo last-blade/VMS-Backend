@@ -54,10 +54,15 @@ const createPlant = asyncHandler(async (request, response) => {
 
     const createdPlant = await Plant.findById(newPlant._id);
     const baseUrl = "https://vms-frontend-pied.vercel.app/visitorform";
-    const qrUrl = `${baseUrl}?plantId=${newPlant._id}&companyId=${newPlant.company}`;
-    const qrData = JSON.stringify(qrUrl);
+    const u = new URL(baseUrl);
+    u.searchParams.set("plantId", String(newPlant._id));
+    u.searchParams.set("companyId", String(newPlant.company));
 
-    const qrCodeDataUri = await QRCode.toDataURL(qrData);
+    const qrText = u.toString().trim(); // <-- MUST be plain URL text
+
+    console.log("QR TEXT:", qrText); // should print WITHOUT surrounding quotes
+
+    const qrCodeDataUri = await QRCode.toDataURL(qrText);
     
     createdPlant.plantQr = qrCodeDataUri;
     await createdPlant.save({validateBeforeSave: false});
