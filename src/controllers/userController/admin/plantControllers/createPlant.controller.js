@@ -56,7 +56,8 @@ const createPlant = asyncHandler(async (request, response) => {
 
     const qrData = JSON.stringify({
         plantId: newPlant._id,
-        companyId: newPlant.company
+        companyId: newPlant.company,
+        url: "https://vms-frontend-pied.vercel.app/visitorform",
     });
 
     const qrCodeDataUri = await QRCode.toDataURL(qrData);
