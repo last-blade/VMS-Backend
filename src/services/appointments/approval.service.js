@@ -4,12 +4,13 @@ import { sendWhatsAppTemplate } from "../whatsapp/whatsapp.service.js";
 export async function approveOrRejectAppointment({ appointmentMongoId, appointmentStatus }) {
   const foundAppointment = await Appointment.findById(appointmentMongoId);
   if (!foundAppointment) throw new Error("Appointment not found");
-
+console.log("foundAppointment", foundAppointment)
   // prevent double processing
-  if (foundAppointment.appointmentStatus) {
-    // if already Approved/Rejected, skip
+    // prevent double processing (skip only if already finalized)
+    if (["Approved", "Rejected"].includes(foundAppointment.appointmentStatus)) {
     return { skipped: true, status: foundAppointment.appointmentStatus };
-  }
+    }
+
 
   if (appointmentStatus === "Approved") {
     foundAppointment.isAppointmentActive = true;
@@ -21,7 +22,7 @@ export async function approveOrRejectAppointment({ appointmentMongoId, appointme
 
     if (phone) {
       await sendWhatsAppTemplate({
-        to: phone,
+        to: String(phone),
         messages: [
           visitorName,
           foundAppointment.appointmentId, // this is your APT-xxxx id
