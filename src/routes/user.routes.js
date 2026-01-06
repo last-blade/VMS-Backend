@@ -71,7 +71,7 @@ router.route("/roles/delete-role/:roleId").delete(authentication, deleteRoles);
 
 //Company
 router.route("/companies/create-company").post(authentication, createComapny);
-router.route("/companies/fetch-companies").get(authentication, getCompanies);
+router.route("/companies/fetch-companies").get(getCompanies);
 router.route("/companies/edit-company").patch(authentication, editCompany);
 router.route("/companies/change-company-status").patch(authentication, changeCompanyActiveStatus);
 router.route("/companies/delete-company/:companyId").delete(authentication, deleteCompany);
@@ -102,13 +102,13 @@ router.route("/plant-types/edit-plant-type/:plantTypeId").patch(authentication, 
 
 //Plant
 router.route("/plants/create-plant").post(authentication, createPlant);
-router.route("/plants/fetch-plants").get(authentication, getPlants);
+router.route("/plants/fetch-plants").get(getPlants);
 router.route("/plants/delete-plant/:plantId").delete(authentication, deletePlant);
 router.route("/plants/edit-plant/:plantId").patch(authentication, editPlant);
 
 //Department
 router.route("/departments/create-department").post(authentication, createDeparment);
-router.route("/departments/fetch-departments").get(authentication, getDepartments);
+router.route("/departments/fetch-departments").get(getDepartments);
 router.route("/departments/delete-department/:departmentId").delete(authentication, deleteDepartment);
 router.route("/departments/edit-department/:departmentId").patch(authentication, editDepartment);
 
@@ -120,7 +120,7 @@ router.route("/gates/edit-gate/:gateId").patch(authentication, editGate);
 
 //Area
 router.route("/areas/create-area").post(authentication, createArea);
-router.route("/areas/fetch-areas").get(authentication, getAreas);
+router.route("/areas/fetch-areas").get(getAreas);
 router.route("/areas/edit-area/:areaId").patch(authentication, editArea);
 router.route("/areas/delete-area/:areaId").delete(authentication, deleteArea);
 
@@ -137,7 +137,7 @@ router.route("/appointments/:appointmentId").get(getAppointment);
 router.route("/dashboard/countings").get(authentication, dashboard);
 router.route("/dashboard/activities").get(authentication, recentActivities);
 
-router.route("/fetch-users").get(authentication, getUsers);
+router.route("/fetch-users").get(getUsers);
 router.route("/fetch-visitor-by-aptid/:appointmentId").get(authentication, getUserNameByAppointmentId);
 
 export default router;
