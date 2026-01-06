@@ -31,6 +31,10 @@ const rejectOrApproveVisitorAppointment = asyncHandler(async (request, response)
             ],
             templateName: "vms_appointment_approved",
             languageCode: "en",
+            urlButton: {
+                index: 0,                 // first button
+                param: encodeURIComponent(appointmentId), // only the dynamic part
+            },
         });
     }
 
