@@ -4,7 +4,7 @@ import { apiError, apiResponse, Appointment, asyncHandler, isObjectIdValid } fro
 const rejectOrApproveVisitorAppointment = asyncHandler(async (request, response) => {
     const {appointmentStatus, appointmentId} = request.body;
 
-    if(!appointmentStatus || appointmentStatus.trim() === undefined){
+    if(!appointmentStatus || appointmentStatus.trim()){
         throw new apiError(400, "Approval or rejection status is required")
     }
 
@@ -39,7 +39,7 @@ const rejectOrApproveVisitorAppointment = asyncHandler(async (request, response)
     }
 
     foundAppointment.appointmentStatus = appointmentStatus;
-    foundAppointment.save({validateBeforeSave: false});
+    await foundAppointment.save({validateBeforeSave: false});
 
     return response.status(200)
     .json(
