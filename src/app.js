@@ -23,10 +23,14 @@ app.use(express.static("public"));
 
 
 //Importing Routes
+import webhookRoutes from "./routes/webhook.js";
 import userRoutes from "./routes/user.routes.js"
 
 
 //Routes
 app.use("/api/v1/user", userRoutes);
+
+//Webhook
+app.use("/webhook", webhookRoutes);
 
 export {app}
