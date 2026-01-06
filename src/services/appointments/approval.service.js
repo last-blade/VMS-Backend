@@ -27,7 +27,7 @@ console.log("foundAppointment", foundAppointment)
           visitorName,
           foundAppointment.appointmentId, // this is your APT-xxxx id
         ],
-        templateName: "vms_appointment_approved",
+        templateName: "vms_appointment_approved_v3",
         languageCode: "en",
         urlButton: {
           index: 0,

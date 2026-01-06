@@ -29,7 +29,7 @@ const rejectOrApproveVisitorAppointment = asyncHandler(async (request, response)
             visitorName || "User",
             appointmentId,
             ],
-            templateName: "vms_appointment_approved",
+            templateName: "vms_appointment_approved_v3",
             languageCode: "en",
             urlButton: {
                 index: 0,                 // first button
