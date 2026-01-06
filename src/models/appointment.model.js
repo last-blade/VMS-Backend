@@ -123,8 +123,9 @@ const appointmentSchema = new Schema({
 
     appointmentStatus: {
         type: String,
-        enum: ["Approved", "Rejected"],
+        enum: ["Approved", "Rejected", "Pending"],
         index: true,
+        default: "Pending"
     },
 
     isAppointmentActive: {
@@ -158,6 +159,19 @@ const appointmentSchema = new Schema({
     //     ref: "User",
     //     default: null,
     // },
+
+    // WhatsApp approval mapping
+  approvalRequestWamid: {
+    type: String,
+    required: false,
+    index: true,
+  },
+
+  approvalRequestSentAt: {
+    type: Date,
+    default: null,
+  },
+
 }, {timestamps: true});
 
 
