@@ -1,3 +1,4 @@
+import { sendWhatsAppTemplate } from "../../../services/whatsapp/whatsapp.service.js";
 import { apiError, apiResponse, Appointment, asyncHandler, isObjectIdValid, Plant } from "../../allImports.js";
 
 const createUnknownVisitorAppointment = asyncHandler(async (request, response) => {
@@ -27,7 +28,7 @@ const createUnknownVisitorAppointment = asyncHandler(async (request, response) =
         throw new apiError(404, "Plant not found")
     }
 
-    await Appointment.create({
+    const createdAppointment = await Appointment.create({
         plant,
         department,
         personToVisit,
@@ -38,6 +39,43 @@ const createUnknownVisitorAppointment = asyncHandler(async (request, response) =
         visitors,
         company: foundPlant?.company.companyName,
     });
+
+    const foundNewlyAppointent = await Appointment.findById(createdAppointment._id)
+    .populate("personToVisit", "fullname mobile")
+    .populate("areaToVisit", "areaName");
+
+    const v0 = foundNewlyAppointent.visitors[0];
+    const visitorName = v0?.fullname;
+    const visitorMobile = v0?.mobile;
+    const visitorsCompany = v0?.company;
+
+    const visitArea = foundNewlyAppointent.areaToVisit.areaName;
+    const personToVisitInCompany = foundNewlyAppointent.personToVisit.fullname;
+
+    const whatsappResponse = await sendWhatsAppTemplate({
+        to: foundNewlyAppointent.personToVisit.mobile,
+        messages: [
+        personToVisitInCompany || "Host",    
+        visitorName || "Visitor",
+        visitorMobile,
+        visitorsCompany,
+        visitArea,
+        foundNewlyAppointent.purposeOfVisit,
+        foundNewlyAppointent.appointmentDate,
+        foundNewlyAppointent.appointmentValidTill,
+        ],
+        templateName: "vms_host_approval_request",
+        languageCode: "en",
+    });
+console.log("whatsapp response", whatsappResponse);
+    const wamid = whatsappResponse?.messages?.[0]?.id;
+    if (wamid) {
+        await Appointment.findByIdAndUpdate(createdAppointment._id, {
+            approvalRequestWamid: wamid,
+            approvalRequestSentAt: new Date(),
+            appointmentStatus: "Pending",
+        });
+    }
 
     return response.status(201)
     .json(
