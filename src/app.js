@@ -25,10 +25,12 @@ app.use(express.static("public"));
 //Importing Routes
 import webhookRoutes from "./routes/webhook.js";
 import userRoutes from "./routes/user.routes.js"
+import vistorformRoutes from "./routes/visitorform.routes.js"
 
 
 //Routes
 app.use("/api/v1/user", userRoutes);
+app.use("/api/v1/visitor-form", vistorformRoutes);
 
 //Webhook
 app.use("/webhook", webhookRoutes);
