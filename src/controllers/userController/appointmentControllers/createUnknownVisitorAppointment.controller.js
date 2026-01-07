@@ -40,7 +40,7 @@ console.log("Area", areaToVisit);
         appointmentValidTill,
         purposeOfVisit,
         visitors,
-        company: foundPlant?.company.companyName,
+        company: foundPlant?.company._id,
     });
 
     const foundNewlyAppointent = await Appointment.findById(createdAppointment._id)
