@@ -3,7 +3,10 @@ import { apiError, apiResponse, Appointment, asyncHandler, isObjectIdValid, Plan
 
 const createUnknownVisitorAppointment = asyncHandler(async (request, response) => {
     const {plant, department, personToVisit, areaToVisit, appointmentDate, appointmentValidTill, purposeOfVisit, visitors} = request.body;
-
+console.log("plant", plant)
+console.log("department", department);
+console.log("persontovisit", personToVisit);
+console.log("Area", areaToVisit);
     if([plant, department, personToVisit, areaToVisit].some(input => !isObjectIdValid(input))){
         throw new apiError(400, "One or more Object IDs are invalid");
     }
