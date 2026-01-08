@@ -1,4 +1,5 @@
 import { apiError, apiResponse, Appointment, asyncHandler, Plant } from "../../allImports.js";
+import { sendWhatsAppTemplate } from "../../services/whatsapp/whatsapp.service.js";
 
 const scanQrCode = asyncHandler(async (request, response) => {
     const { appointmentId } = request.params;
@@ -40,7 +41,7 @@ const scanQrCode = asyncHandler(async (request, response) => {
 
     // CASE 2: MANUAL CHECK-IN
     else if (appointmentId) {
-        appointment = await Appointment.findOne({appointmentId});
+        appointment = await Appointment.findOne({appointmentId}).populate("personToVisit", "fullname mobile");
 
         if (!appointment) {
             throw new apiError(404, "Appointment not found");
@@ -69,6 +70,23 @@ const scanQrCode = asyncHandler(async (request, response) => {
     appointment.checkedInTime = now;
     appointment.isAppointmentActive = true;
     await appointment.save({ validateBeforeSave: false });
+
+    const v0 = appointment.visitors[0];
+    const visitorName = v0?.fullname;
+    // const visitorMobile = v0?.mobile;
+    // const visitorsCompany = v0?.company;
+    const checkInTime = appointment.checkInTime;
+
+    const whatsappResponse = await sendWhatsAppTemplate({
+        to: appointment.personToVisit.mobile,
+        messages: [    
+        visitorName || "Visitor",
+        appointmentId,
+        checkInTime,
+        ],
+        templateName: "vms_visitor_checkedin",
+        languageCode: "en",
+    });
 
     return response.json(new apiResponse(200, appointment, "Checked in successfully"));
 });
