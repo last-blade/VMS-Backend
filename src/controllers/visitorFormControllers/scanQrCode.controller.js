@@ -88,7 +88,7 @@ console.log("checkintime",checkInTime)
         checkInTime,
         area,
         ],
-        templateName: "vms_visitor_checkedin",
+        templateName: "vms_host_checkin_alert",
         languageCode: "en",
     });
 console.log("checkin response", whatsappResponse);
