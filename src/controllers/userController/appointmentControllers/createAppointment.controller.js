@@ -57,20 +57,18 @@ const createAppointment = asyncHandler(async (request, response) => {
     
         const visitArea = foundNewlyAppointent.areaToVisit.areaName;
         const personToVisitInCompany = foundNewlyAppointent.personToVisit.fullname;
-    
+        const appointmentId = createdAppointment?.appointmentId;
         const whatsappResponse = await sendWhatsAppTemplate({
             to: foundNewlyAppointent.personToVisit.mobile,
-            messages: [
-            personToVisitInCompany || "Host",    
+            messages: [  
             visitorName || "Visitor",
-            visitorMobile,
+            appointmentId,
             visitorsCompany,
-            visitArea,
-            foundNewlyAppointent.purposeOfVisit,
+            // foundNewlyAppointent.purposeOfVisit,
             foundNewlyAppointent.appointmentDate,
             foundNewlyAppointent.appointmentValidTill,
             ],
-            templateName: "vms_host_approval_request",
+            templateName: "vms_appointment_created",
             languageCode: "en",
         });
     console.log("whatsapp response", whatsappResponse);
@@ -82,6 +80,30 @@ const createAppointment = asyncHandler(async (request, response) => {
                 appointmentStatus: "Pending",
             });
         }
+    //     const whatsappResponse = await sendWhatsAppTemplate({
+    //         to: foundNewlyAppointent.personToVisit.mobile,
+    //         messages: [
+    //         personToVisitInCompany || "Host",    
+    //         visitorName || "Visitor",
+    //         visitorMobile,
+    //         visitorsCompany,
+    //         visitArea,
+    //         foundNewlyAppointent.purposeOfVisit,
+    //         foundNewlyAppointent.appointmentDate,
+    //         foundNewlyAppointent.appointmentValidTill,
+    //         ],
+    //         templateName: "vms_host_approval_request",
+    //         languageCode: "en",
+    //     });
+    // console.log("whatsapp response", whatsappResponse);
+    //     const wamid = whatsappResponse?.messages?.[0]?.id;
+    //     if (wamid) {
+    //         await Appointment.findByIdAndUpdate(createdAppointment._id, {
+    //             approvalRequestWamid: wamid,
+    //             approvalRequestSentAt: new Date(),
+    //             appointmentStatus: "Pending",
+    //         });
+    //     }
 
     return response.status(201)
     .json(
