@@ -37,6 +37,16 @@ console.log("foundAppointment", foundAppointment)
     }
   } else if (appointmentStatus === "Rejected") {
     foundAppointment.isAppointmentActive = false;
+      await sendWhatsAppTemplate({
+        to: String(phone),
+        messages: [
+          visitorName,
+          foundAppointment.appointmentId, // this is your APT-xxxx id
+          "Can't meet right now"
+        ],
+        templateName: "vms_appointment_rejected",
+        languageCode: "en",
+      });
   }
 
   foundAppointment.appointmentStatus = appointmentStatus;
