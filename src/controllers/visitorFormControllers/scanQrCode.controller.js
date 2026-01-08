@@ -1,4 +1,4 @@
-import { apiError, apiResponse, Appointment, asyncHandler, Plant } from "../../allImports.js";
+import { apiError, apiResponse, Appointment, asyncHandler, Plant } from "../allImports.js";
 import { sendWhatsAppTemplate } from "../../services/whatsapp/whatsapp.service.js";
 
 const scanQrCode = asyncHandler(async (request, response) => {
