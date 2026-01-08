@@ -4,7 +4,7 @@ import { sendWhatsAppTemplate } from "../../services/whatsapp/whatsapp.service.j
 const scanQrCode = asyncHandler(async (request, response) => {
     const { appointmentId } = request.params;
     const { qrData } = request.query;  // qrData will come only if QR is scanned
-
+console.log(appointmentId)
     let appointment;
 
     // CASE 1: QR SCAN
@@ -70,13 +70,13 @@ const scanQrCode = asyncHandler(async (request, response) => {
     appointment.checkedInTime = now;
     appointment.isAppointmentActive = true;
     await appointment.save({ validateBeforeSave: false });
-
+console.log(appointment)
     const v0 = appointment.visitors[0];
     const visitorName = v0?.fullname;
     // const visitorMobile = v0?.mobile;
     // const visitorsCompany = v0?.company;
-    const checkInTime = appointment.checkInTime;
-
+    const checkInTime = appointment.checkedInTime;
+console.log("checkintime",checkInTime)
     const whatsappResponse = await sendWhatsAppTemplate({
         to: appointment.personToVisit.mobile,
         messages: [    
@@ -87,7 +87,7 @@ const scanQrCode = asyncHandler(async (request, response) => {
         templateName: "vms_visitor_checkedin",
         languageCode: "en",
     });
-
+console.log("checkin response", whatsappResponse);
     return response.json(new apiResponse(200, appointment, "Checked in successfully"));
 });
 
