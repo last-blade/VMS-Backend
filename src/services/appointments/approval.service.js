@@ -37,6 +37,9 @@ console.log("foundAppointment", foundAppointment)
     }
   } else if (appointmentStatus === "Rejected") {
     foundAppointment.isAppointmentActive = false;
+    const v0 = foundAppointment.visitors?.[0];
+    const visitorName = v0?.fullname || "User";
+    const phone = v0?.mobile;
       await sendWhatsAppTemplate({
         to: String(phone),
         messages: [
