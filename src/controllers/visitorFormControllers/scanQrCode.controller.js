@@ -41,7 +41,9 @@ console.log(appointmentId)
 
     // CASE 2: MANUAL CHECK-IN
     else if (appointmentId) {
-        appointment = await Appointment.findOne({appointmentId}).populate("personToVisit", "fullname mobile");
+        appointment = await Appointment.findOne({appointmentId})
+        .populate("personToVisit", "fullname mobile")
+        .populate("areaToVisit", "areaName");
 
         if (!appointment) {
             throw new apiError(404, "Appointment not found");
@@ -75,6 +77,7 @@ console.log(appointment)
     const visitorName = v0?.fullname;
     // const visitorMobile = v0?.mobile;
     // const visitorsCompany = v0?.company;
+    const area = appointment.areaToVisit.areaName;
     const checkInTime = appointment.checkedInTime;
 console.log("checkintime",checkInTime)
     const whatsappResponse = await sendWhatsAppTemplate({
@@ -83,6 +86,7 @@ console.log("checkintime",checkInTime)
         visitorName || "Visitor",
         appointmentId,
         checkInTime,
+        area,
         ],
         templateName: "vms_visitor_checkedin",
         languageCode: "en",
