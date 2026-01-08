@@ -44,7 +44,7 @@ const visitorsCheckout = asyncHandler(async (request, response) => {
     const visitorName = v0?.fullname;
     // const visitorMobile = v0?.mobile;
     // const visitorsCompany = v0?.company;
-    // const checkInTime = appointment?.checkedOutTime;
+    const checkOutTime = appointment?.checkedOutTime;
     const hostName = appointment.personToVisit.fullname;
     const whatsappResponse = await sendWhatsAppTemplate({
         to: appointment.personToVisit.mobile,
@@ -52,7 +52,7 @@ const visitorsCheckout = asyncHandler(async (request, response) => {
         hostName || "Host",
         visitorName,
         appointmentId,
-        checkedOutTime,
+        checkOutTime,
         ],
         templateName: "vms_host_checkout_alert",
         languageCode: "en",
