@@ -1,3 +1,4 @@
+import { sendWhatsAppTemplate } from "../../../services/whatsapp/whatsapp.service.js";
 import { apiError, apiResponse, Appointment, asyncHandler, isObjectIdValid } from "../../allImports.js";
 
 const visitorsCheckout = asyncHandler(async (request, response) => {
@@ -32,12 +33,30 @@ const visitorsCheckout = asyncHandler(async (request, response) => {
         throw new apiError(400, "Visitor pass is expired")
     }
 
-    await Appointment.findOneAndUpdate({appointmentId}, {
+    const appointment = await Appointment.findOneAndUpdate({appointmentId}, {
         $set: {
             checkedOutTime: checkoutDate,
             isAppointmentActive: false,
         }
-    }, {new: true});
+    }, {new: true}).populate("personToVisit", "fullname mobile");
+
+    const v0 = appointment.visitors[0];
+    const visitorName = v0?.fullname;
+    // const visitorMobile = v0?.mobile;
+    // const visitorsCompany = v0?.company;
+    // const checkInTime = appointment?.checkedOutTime;
+    const hostName = appointment.personToVisit.fullname;
+    const whatsappResponse = await sendWhatsAppTemplate({
+        to: appointment.personToVisit.mobile,
+        messages: [    
+        hostName || "Host",
+        visitorName,
+        appointmentId,
+        checkedOutTime,
+        ],
+        templateName: "vms_host_checkout_alert",
+        languageCode: "en",
+    });
 
     return response.status(200)
     .json(
