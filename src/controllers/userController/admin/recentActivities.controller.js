@@ -5,7 +5,7 @@ const recentActivities = asyncHandler(async (request, response) => {
     const checkedinActivities = await Appointment.aggregate([
       {
         $match: {
-            company: new mongoose.Types.ObjectId(request.user.company),
+            company: new mongoose.Types.ObjectId(request.user.plant),
             checkedInTime: {$exists: true, $ne: null},
         }
       },
@@ -30,7 +30,7 @@ const recentActivities = asyncHandler(async (request, response) => {
     const checkedOutActivities = await Appointment.aggregate([
       {
         $match: {
-            company: new mongoose.Types.ObjectId(request.user.company),
+            company: new mongoose.Types.ObjectId(request.user.plant),
             checkedOutTime: {$exists: true, $ne: null},
         }
       },
