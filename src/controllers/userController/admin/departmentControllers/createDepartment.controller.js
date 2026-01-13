@@ -18,6 +18,7 @@ const createDeparment = asyncHandler(async (request, response) => {
         departmentCreator: request.user.id,
         headOfDepartment,
         company: request.user.company,
+        plant: request.user.plant,
     });
 
     await Company.findByIdAndUpdate(request.user.company, {
