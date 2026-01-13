@@ -36,6 +36,13 @@ const departmentSchema = new Schema({
         index: true,
     },
 
+    plant: {
+        type: Schema.Types.ObjectId,
+        ref: "Plant",
+        required: true,
+        index: true,
+    },
+
     usageCount: {
         type: Number,
         required: true,

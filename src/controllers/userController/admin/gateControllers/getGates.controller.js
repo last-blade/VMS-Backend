@@ -2,8 +2,9 @@ import moment from "moment";
 import { apiResponse, asyncHandler, Gate } from "../../../allImports.js";
 
 const getGates = asyncHandler(async (request, response) => {
+    const { plantId } = request.query;
     const gates = await Gate.find({
-        company: request.user?.company,
+        plant: plantId || request.user?.plant,
     }).populate("gateInchargeName", "fullname")
     .populate("plant", "plantName")
     .populate("gateSecurity", "fullname")

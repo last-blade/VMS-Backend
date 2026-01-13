@@ -1,8 +1,9 @@
 import { apiResponse, Appointment, asyncHandler } from "../../allImports.js";
 
 const getAppointments = asyncHandler(async (request, response) => {
+    const {plantId} = request.query;
     const appointments = await Appointment.find({
-        company: request.user.company
+        plant: plantId || request.user.plant
     }).populate("personToVisit", "fullname")
     .populate("department", "departmentName")
     .populate("areaToVisit", "areaName")
