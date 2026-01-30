@@ -14,8 +14,6 @@ const userSchema = new Schema({
         required: false,
         lowercase: true,
         trim: true,
-        unique: true,
-        index: true,
     },
 
     department: {
@@ -137,5 +135,14 @@ userSchema.methods.generateRefreshToken = async function(){
 
     return refreshToken;
 };
+
+userSchema.index(
+  { email: 1 },
+  {
+    unique: true,
+    partialFilterExpression: { email: { $type: "string" } },
+  }
+);
+
 
 export const User = mongoose.model("User", userSchema);
