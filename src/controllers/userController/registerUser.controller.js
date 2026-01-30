@@ -1,3 +1,5 @@
+import { apiError, apiResponse, User, asyncHandler } from "../allImports.js";
+
 const registerUser = asyncHandler(async (req, res) => {
   const {
     fullname,
@@ -43,3 +45,5 @@ const registerUser = asyncHandler(async (req, res) => {
     new apiResponse(201, {}, "User registered successfully")
   );
 });
+
+export {registerUser}
