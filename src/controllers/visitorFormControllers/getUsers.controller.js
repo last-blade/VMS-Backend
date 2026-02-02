@@ -1,15 +1,15 @@
 import { apiResponse, asyncHandler, User } from "../../controllers/allImports.js";
 
 const getUsersForVForm = asyncHandler(async(request, response) => {
-    const { companyId } = request.query;
+    const { plantId } = request.query;
 
-    if (!companyId) {
+    if (!plantId) {
         return response.status(400).json(
             new apiResponse(400, null, "Company ID is required")
         );
     }
     const users = await User.find({
-        company: companyId,
+        plant: plantId,
     }).populate("department", "departmentName")
     .populate("company", "companyName")
     .populate("plant", "plantName")
