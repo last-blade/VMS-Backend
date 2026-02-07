@@ -2,6 +2,9 @@ import { apiResponse, asyncHandler, User } from "../../allImports.js";
 
 const getUsers = asyncHandler(async(request, response) => {
     const { plantId } = request.query;
+    const limit = parseInt(request.query.limit) || 10;
+    const page = parseInt(request.query.page) || 1;
+    const skip = (page - 1) * limit;
 
     const filterplantId = plantId || request.user?.plant;
 
@@ -15,7 +18,11 @@ const getUsers = asyncHandler(async(request, response) => {
     }).populate("department", "departmentName")
     .populate("company", "companyName")
     .populate("plant", "plantName")
-    .populate("role", "roleName");
+    .populate("role", "roleName").skip(skip).limit(limit);
+
+    const totalUser = await User.countDocuments({
+        plant: filterplantId,
+    });
 
     return response.status(200)
     .json(

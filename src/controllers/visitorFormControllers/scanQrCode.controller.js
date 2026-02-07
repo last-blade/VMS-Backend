@@ -77,7 +77,7 @@ console.log(appointment)
     const visitorName = v0?.fullname;
     // const visitorMobile = v0?.mobile;
     // const visitorsCompany = v0?.company;
-    const area = appointment.areaToVisit.areaName;
+    const area = appointment?.areaToVisit?.areaName;
     const checkInTime = appointment.checkedInTime;
 console.log("checkintime",checkInTime)
     const whatsappResponse = await sendWhatsAppTemplate({
@@ -86,7 +86,7 @@ console.log("checkintime",checkInTime)
         visitorName || "Visitor",
         appointmentId,
         checkInTime,
-        area,
+        area || "NA",
         ],
         templateName: "vms_host_checkin_alert",
         languageCode: "en",

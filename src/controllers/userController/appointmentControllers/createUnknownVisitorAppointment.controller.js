@@ -4,7 +4,7 @@ import { apiError, apiResponse, Appointment, asyncHandler, isObjectIdValid, Plan
 const createUnknownVisitorAppointment = asyncHandler(async (request, response) => {
     const {plant, department, personToVisit, areaToVisit, appointmentDate, appointmentValidTill, purposeOfVisit, visitors} = request.body;
 
-    if([plant, department, personToVisit, areaToVisit].some(input => !isObjectIdValid(input))){
+    if([plant, department, personToVisit].some(input => !isObjectIdValid(input))){
         throw new apiError(400, "One or more Object IDs are invalid");
     }
 
@@ -32,7 +32,7 @@ const createUnknownVisitorAppointment = asyncHandler(async (request, response) =
         plant,
         department,
         personToVisit,
-        areaToVisit,
+        areaToVisit: areaToVisit || null,
         appointmentDate,
         appointmentValidTill,
         purposeOfVisit,
@@ -49,7 +49,7 @@ const createUnknownVisitorAppointment = asyncHandler(async (request, response) =
     const visitorMobile = v0?.mobile;
     const visitorsCompany = v0?.company;
 
-    const visitArea = foundNewlyAppointent.areaToVisit.areaName;
+    const visitArea = foundNewlyAppointent?.areaToVisit?.areaName;
     const personToVisitInCompany = foundNewlyAppointent.personToVisit.fullname;
 
     const whatsappResponse = await sendWhatsAppTemplate({
@@ -59,7 +59,7 @@ const createUnknownVisitorAppointment = asyncHandler(async (request, response) =
         visitorName || "Visitor",
         visitorMobile,
         visitorsCompany,
-        visitArea,
+        visitArea || "NA",
         foundNewlyAppointent.purposeOfVisit,
         foundNewlyAppointent.appointmentDate,
         foundNewlyAppointent.appointmentValidTill,

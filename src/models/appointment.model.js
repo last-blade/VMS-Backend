@@ -24,7 +24,7 @@ const appointmentSchema = new Schema({
     areaToVisit: {
         type: Schema.Types.ObjectId,
         ref: "Area",
-        required: true,
+        required: false,
     },
 
     appointmentDate: {
