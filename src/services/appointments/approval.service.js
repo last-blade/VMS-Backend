@@ -15,13 +15,13 @@ export async function approveOrRejectAppointment({ appointmentMongoId, appointme
   const v0 = foundAppointment.visitors?.[0];
   const visitorName = v0?.fullname || "User";
   const phone = v0?.mobile;
-
+console.log("visitor phone", phone)
   if (!phone) throw new Error("Visitor mobile missing");
 
   if (["RED", "GREEN", "PURPLE"].includes(passType)) {
     foundAppointment.isAppointmentActive = true;
     foundAppointment.appointmentPassType = passType;
-
+console.log("appointment", foundAppointment)
     const wa = await sendWhatsAppTemplate({
       to: String(phone),
       messages: [visitorName, foundAppointment.appointmentId],
