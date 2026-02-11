@@ -97,7 +97,7 @@ const createUnknownVisitorAppointment = asyncHandler(
         foundNewlyAppointent.appointmentDate,
         foundNewlyAppointent.appointmentValidTill,
       ],
-      templateName: "vms_host_approval_request",
+      templateName: "vms_host_approval_request_v1",
       languageCode: "en",
     });
     console.log("whatsapp response", whatsappResponse);
