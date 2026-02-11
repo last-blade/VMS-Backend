@@ -1,42 +1,43 @@
 import mongoose, { Schema } from "mongoose";
 
-const appointmentSchema = new Schema({
+const appointmentSchema = new Schema(
+  {
     plant: {
-        type: Schema.Types.ObjectId,
-        ref: "Plant",
-        required: true,
-        index: true,
+      type: Schema.Types.ObjectId,
+      ref: "Plant",
+      required: true,
+      index: true,
     },
 
     department: {
-        type: Schema.Types.ObjectId,
-        ref: "Department",
-        required: true,
-        index: true,
+      type: Schema.Types.ObjectId,
+      ref: "Department",
+      required: true,
+      index: true,
     },
 
     personToVisit: {
-        type: Schema.Types.ObjectId,
-        ref: "User",
-        required: true,
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
     },
 
     areaToVisit: {
-        type: Schema.Types.ObjectId,
-        ref: "Area",
-        required: false,
+      type: Schema.Types.ObjectId,
+      ref: "Area",
+      required: false,
     },
 
     appointmentDate: {
-        type: Date,
-        required: true,
-        index: true,
+      type: Date,
+      required: true,
+      index: true,
     },
 
     appointmentValidTill: {
-        type: Date,
-        required: true,
-        index: true,
+      type: Date,
+      required: true,
+      index: true,
     },
 
     // isAppointmentExtended: {
@@ -46,89 +47,89 @@ const appointmentSchema = new Schema({
     // },
 
     purposeOfVisit: {
-        type: String,
-        enum: ["Interview", "Service", "Meeting", "Training", "Others"],
-        required: true,
-        index: true,
+      type: String,
+      enum: ["Interview", "Service", "Meeting", "Training", "Others"],
+      required: true,
+      index: true,
     },
 
     visitors: [
-        {
-            mobile: {
-                type: Number,
-                required: true,
-                index: true,
-            },
+      {
+        mobile: {
+          type: Number,
+          required: true,
+          index: true,
+        },
 
-            fullname: {
-                type: String,
-                required: true,
-                trim: true,
-                lowercase: true,
-            },
+        fullname: {
+          type: String,
+          required: true,
+          trim: true,
+          lowercase: true,
+        },
 
-            company: {
-                type: String,
-                required: false,
-                trim: true,
-                lowercase: true,
-            },
+        company: {
+          type: String,
+          required: false,
+          trim: true,
+          lowercase: true,
+        },
 
-            email: {
-                type: String,
-                required: false,
-                trim: true,
-                lowercase: true,
-            },
+        email: {
+          type: String,
+          required: false,
+          trim: true,
+          lowercase: true,
+        },
 
-            userImage: {
-                type: String,
-                required: false,
-            },
+        userImage: {
+          type: String,
+          required: false,
+        },
 
-            belongings: [
-                {
-                    assetName: {
-                        type: String,
-                        required: false,
-                        trim: true,
-                        lowercase: true,
-                    },
-                }
-            ],
-
-            vehicleNo: {
-                type: String,
-                required: false,
-                trim: true,
-                lowercase: true,
+        belongings: [
+          {
+            assetName: {
+              type: String,
+              required: false,
+              trim: true,
+              lowercase: true,
             },
-        }
+          },
+        ],
+
+        vehicleNo: {
+          type: String,
+          required: false,
+          trim: true,
+          lowercase: true,
+        },
+      },
     ],
 
     checkedInTime: {
-        type: Date,
-        required: false,
-        index: true,
-        default: null,
+      type: Date,
+      required: false,
+      index: true,
+      default: null,
     },
 
     checkedOutTime: {
-        type: Date,
-        required: false,
-        index: true,
-        default: null,
+      type: Date,
+      required: false,
+      index: true,
+      default: null,
     },
 
     appointmentId: {
-        type: String,
-        required: false,
-        trim: true,
-        unique: true,
-        index: true,
+      type: String,
+      required: false,
+      trim: true,
+      unique: true,
+      index: true,
     },
 
-    // appointmentStatus: {
+    // appointmentPassType: {
     //     type: String,
     //     enum: ["Approved", "Rejected", "Pending"],
     //     index: true,
@@ -136,50 +137,51 @@ const appointmentSchema = new Schema({
     // },
 
     isAppointmentActive: {
-        type: Boolean,
-        default: false,
-        index: true,
+      type: Boolean,
+      default: false,
+      index: true,
     },
 
     company: {
-        type: Schema.Types.ObjectId,
-        ref: "Company",
-        required: true,
-        index: true,
+      type: Schema.Types.ObjectId,
+      ref: "Company",
+      required: true,
+      index: true,
     },
 
     appointmentPassType: {
-        type: String,
-        enum: ["RED", "YELLOW", "PURPLE", "REJECT"],
-        default: null,
-        required: false,
-        index: true,
+      type: String,
+      enum: ["RED", "YELLOW", "PURPLE", "REJECT", "PENDING"],
+      default: null,
+      required: false,
+      index: true,
     },
 
     appointmentCreator: {
-        type: Schema.Types.ObjectId,
-        ref: "User",
-        required: false,
-        index: true,
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: false,
+      index: true,
     },
 
     // WhatsApp approval mapping
-  approvalRequestWamid: {
-    type: String,
-    required: false,
-    index: true,
+    approvalRequestWamid: {
+      type: String,
+      required: false,
+      index: true,
+    },
+
+    approvalRequestSentAt: {
+      type: Date,
+      default: null,
+    },
   },
+  { timestamps: true },
+);
 
-  approvalRequestSentAt: {
-    type: Date,
-    default: null,
-  },
-
-}, {timestamps: true});
-
-
-appointmentSchema.pre("save", function(next) {
-  if (!this.appointmentDate) return next(new Error("appointmentDate is required"));
+appointmentSchema.pre("save", function (next) {
+  if (!this.appointmentDate)
+    return next(new Error("appointmentDate is required"));
 
   const today = new Date();
   today.setHours(0, 0, 0, 0);
@@ -191,8 +193,13 @@ appointmentSchema.pre("save", function(next) {
     return next(new Error("Can't select the past date for appointment"));
   }
 
-  if (this.appointmentValidTill && new Date(this.appointmentValidTill) < new Date(this.appointmentDate)) {
-    return next(new Error("Appointment Valid Till cannot be before appointmentDate"));
+  if (
+    this.appointmentValidTill &&
+    new Date(this.appointmentValidTill) < new Date(this.appointmentDate)
+  ) {
+    return next(
+      new Error("Appointment Valid Till cannot be before appointmentDate"),
+    );
   }
 
   if (!this.appointmentId) {
@@ -201,6 +208,5 @@ appointmentSchema.pre("save", function(next) {
 
   next();
 });
-
 
 export const Appointment = mongoose.model("Appointment", appointmentSchema);

@@ -2,110 +2,107 @@ import mongoose from "mongoose";
 import { apiResponse, Appointment, asyncHandler } from "../../allImports.js";
 
 const dashboard = asyncHandler(async (request, response) => {
+  const startOfDay = new Date();
+  startOfDay.setHours(0, 0, 0, 0);
 
-    const startOfDay = new Date();
-    startOfDay.setHours(0, 0, 0, 0);
+  const endOfDay = new Date();
+  endOfDay.setHours(23, 59, 59, 999);
 
-    const endOfDay = new Date();
-    endOfDay.setHours(23, 59, 59, 999);
+  const totalPassIssued = await Appointment.aggregate([
+    {
+      $match: {
+        plant: new mongoose.Types.ObjectId(request.user.plant),
+        appointmentPassType: "RED" || "GREEN" || "PURPLE",
+        createdAt: { $gte: startOfDay, $lte: endOfDay },
+      },
+    },
 
-    const totalPassIssued = await Appointment.aggregate([
-        {
-            $match: {
-                plant: new mongoose.Types.ObjectId(request.user.plant),
-                appointmentStatus: "Approved",
-                createdAt: { $gte: startOfDay, $lte: endOfDay },
-            }
-        },
+    {
+      $count: "totalVisitorsPassIssued",
+    },
+  ]);
 
-        {
-            $count: "totalVisitorsPassIssued"
-        },
-    ]);
+  const totalVisitorsInsideCompany = await Appointment.aggregate([
+    {
+      $match: {
+        plant: new mongoose.Types.ObjectId(request.user.plant),
+        isAppointmentActive: true,
+        createdAt: { $gte: startOfDay, $lte: endOfDay },
+      },
+    },
 
-    const totalVisitorsInsideCompany = await Appointment.aggregate([
-        {
-            $match: {
-                plant: new mongoose.Types.ObjectId(request.user.plant),
-                isAppointmentActive: true,
-                createdAt: { $gte: startOfDay, $lte: endOfDay },
-            }
-        },
+    {
+      $count: "visitorsInsideCompany",
+    },
+  ]);
 
-        {
-            $count: "visitorsInsideCompany"
-        },
-    ]);
+  const totalCheckedInVisitors = await Appointment.aggregate([
+    {
+      $match: {
+        plant: new mongoose.Types.ObjectId(request.user.plant),
+        checkedInTime: { $exists: true, $ne: null },
+        createdAt: { $gte: startOfDay, $lte: endOfDay },
+      },
+    },
 
-    const totalCheckedInVisitors = await Appointment.aggregate([
-        {
-            $match: {
-                plant: new mongoose.Types.ObjectId(request.user.plant),
-                checkedInTime: { $exists: true, $ne: null },
-                createdAt: { $gte: startOfDay, $lte: endOfDay },
-            }
-        },
+    {
+      $count: "checkedInVisitors",
+    },
+  ]);
 
-        {
-            $count: "checkedInVisitors"
-        },
-    ]);
+  const totalCheckedOutVisitors = await Appointment.aggregate([
+    {
+      $match: {
+        plant: new mongoose.Types.ObjectId(request.user.plant),
+        checkedOutTime: { $exists: true, $ne: null },
+        createdAt: { $gte: startOfDay, $lte: endOfDay },
+      },
+    },
 
-    const totalCheckedOutVisitors = await Appointment.aggregate([
-        {
-            $match: {
-                plant: new mongoose.Types.ObjectId(request.user.plant),
-                checkedOutTime: { $exists: true, $ne: null },
-                createdAt: { $gte: startOfDay, $lte: endOfDay },
-            }
-        },
+    {
+      $count: "checkedOutVisitors",
+    },
+  ]);
 
-        {
-            $count: "checkedOutVisitors"
-        },
-    ]);
+  const totalAppointments = await Appointment.aggregate([
+    {
+      $match: {
+        plant: new mongoose.Types.ObjectId(request.user.plant),
+        createdAt: { $gte: startOfDay, $lte: endOfDay },
+      },
+    },
 
-    const totalAppointments = await Appointment.aggregate([
-        {
-            $match: {
-                plant: new mongoose.Types.ObjectId(request.user.plant),
-                createdAt: { $gte: startOfDay, $lte: endOfDay },
-            }
-        },
+    {
+      $count: "totalAppointments",
+    },
+  ]);
 
-        {
-            $count: "totalAppointments"
-        },
-    ]);
+  const pendingAppointments = await Appointment.aggregate([
+    {
+      $match: {
+        plant: new mongoose.Types.ObjectId(request.user.plant),
+        appointmentPassType: { $exists: true, $ne: ["RED", "GREEN", "PURPLE", "REJECTED"] },
+        createdAt: { $gte: startOfDay, $lte: endOfDay },
+      },
+    },
 
-    const pendingAppointments = await Appointment.aggregate([
-        {
-            $match: {
-                plant: new mongoose.Types.ObjectId(request.user.plant),
-                appointmentStatus: {$exists: true, $ne: ["Rejected", "Approved"]},
-                createdAt: { $gte: startOfDay, $lte: endOfDay },
-            }
-        },
+    {
+      $count: "totalPendingAppointments",
+    },
+  ]);
 
-        {
-            $count: "totalPendingAppointments"
-        },
-    ]);
+  let dashboardData = {};
 
+  dashboardData.totalPassIssued = totalPassIssued;
+  dashboardData.totalVisitorsInsideCompany = totalVisitorsInsideCompany;
+  dashboardData.totalCheckedInVisitors = totalCheckedInVisitors;
+  dashboardData.totalCheckedOutVisitors = totalCheckedOutVisitors;
+  dashboardData.totalAppointments = totalAppointments;
+  dashboardData.pendingAppointments = pendingAppointments;
 
-    let dashboardData = {};
-
-    dashboardData.totalPassIssued = totalPassIssued;
-    dashboardData.totalVisitorsInsideCompany = totalVisitorsInsideCompany;
-    dashboardData.totalCheckedInVisitors = totalCheckedInVisitors;
-    dashboardData.totalCheckedOutVisitors = totalCheckedOutVisitors;
-    dashboardData.totalAppointments = totalAppointments;
-    dashboardData.pendingAppointments = pendingAppointments;
-
-    return response.status(200)
-    .json(
-        new apiResponse(200, dashboardData, "Fetched")
-    )
+  return response
+    .status(200)
+    .json(new apiResponse(200, dashboardData, "Fetched"));
 });
 
-export {dashboard}
+export { dashboard };
