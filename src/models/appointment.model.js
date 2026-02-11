@@ -95,7 +95,14 @@ const appointmentSchema = new Schema({
                         lowercase: true,
                     },
                 }
-            ]
+            ],
+
+            vehicleNo: {
+                type: String,
+                required: false,
+                trim: true,
+                lowercase: true,
+            },
         }
     ],
 
@@ -141,24 +148,19 @@ const appointmentSchema = new Schema({
         index: true,
     },
 
+    appointmentPassType: {
+        type: String,
+        enum: ["Red", "Yellow", "Purple"],
+        required: false,
+        index: true,
+    },
+
     appointmentCreator: {
         type: Schema.Types.ObjectId,
         ref: "User",
         required: false,
         index: true,
     },
-
-    // checkedInBy: {
-    //     type: Schema.Types.ObjectId,
-    //     ref: "User",
-    //     default: null,
-    // },
-
-    // checkedOutBy: {
-    //     type: Schema.Types.ObjectId,
-    //     ref: "User",
-    //     default: null,
-    // },
 
     // WhatsApp approval mapping
   approvalRequestWamid: {
