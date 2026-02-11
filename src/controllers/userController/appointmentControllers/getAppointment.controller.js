@@ -23,7 +23,7 @@ const getAppointment = asyncHandler(async (request, response) => {
     throw new apiError(404, "Appointment not found, maybe expired");
   }
 
-  if (foundAppointment.appointmentPassType === "REJECTED") {
+  if (foundAppointment.appointmentPassType === "REJECT") {
     throw new apiError(400, "This appointment is rejected");
   }
 

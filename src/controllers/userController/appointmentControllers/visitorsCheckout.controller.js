@@ -33,7 +33,7 @@ const visitorsCheckout = asyncHandler(async (request, response) => {
     throw new apiError(400, "Already checked out");
   }
 
-  if (foundAppointment.appointmentPassType === "REJECTED") {
+  if (foundAppointment.appointmentPassType === "REJECT") {
     throw new apiError(400, "This visitor pass is rejected");
   }
 
