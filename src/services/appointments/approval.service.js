@@ -18,7 +18,7 @@ export async function approveOrRejectAppointment({ appointmentMongoId, appointme
 console.log("visitor phone", phone)
   if (!phone) throw new Error("Visitor mobile missing");
 
-  if (["RED", "GREEN", "PURPLE"].includes(passType)) {
+  if (["RED", "GREEN", "PURPLE", "PENDING"].includes(passType)) {
     foundAppointment.isAppointmentActive = true;
     foundAppointment.appointmentPassType = passType;
 console.log("appointment", foundAppointment)
