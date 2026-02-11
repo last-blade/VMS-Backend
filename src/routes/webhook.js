@@ -16,19 +16,19 @@ router.get("/", (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  console.log("🔥 WEBHOOK HIT", new Date().toISOString());
-  console.log("BODY:", JSON.stringify(req.body, null, 2));
-
   try {
     const value = req.body?.entry?.[0]?.changes?.[0]?.value;
-    console.log("WEBHOOK VALUE:", JSON.stringify(value, null, 2));
+
+    // Ignore delivery/read statuses
+    if (value?.statuses?.length) {
+      console.log("STATUS EVENT:", JSON.stringify(value.statuses[0], null, 2));
+      return res.sendStatus(200);
+    }
 
     const msg = value?.messages?.[0];
     if (!msg) return res.sendStatus(200);
 
-    console.log("MSG TYPE:", msg.type);
-
-    // 1) Extract action (TEXT + BUTTON + INTERACTIVE)
+    // 1) Extract raw action
     let raw = null;
 
     if (msg.type === "text") raw = msg.text?.body;
@@ -38,48 +38,46 @@ router.post("/", async (req, res) => {
     }
 
     raw = String(raw || "").trim().toUpperCase();
+    console.log("MSG TYPE:", msg.type);
     console.log("RAW ACTION:", raw);
 
     // 2) Map to pass type
     let appointmentPassType = null;
-
     if (raw.startsWith("RED")) appointmentPassType = "RED";
     else if (raw.startsWith("GREEN")) appointmentPassType = "GREEN";
     else if (raw.startsWith("PURPLE")) appointmentPassType = "PURPLE";
     else if (raw === "REJECT") appointmentPassType = "REJECT";
-    else return res.sendStatus(200); // ignore other messages
+    else return res.sendStatus(200);
 
     console.log("PASS TYPE:", appointmentPassType);
 
-    // 3) Correlate with original template message id
+    // 3) Correlate to appointment using context wamid
     const originalWamid = msg.context?.id;
     console.log("CONTEXT WAMID:", originalWamid);
-
-    if (!originalWamid) {
-      console.warn("No context.id - cannot map using wamid");
-      return res.sendStatus(200);
-    }
+    if (!originalWamid) return res.sendStatus(200);
 
     const appt = await Appointment.findOne({ approvalRequestWamid: originalWamid });
     if (!appt) {
-      console.warn("No appointment found for wamid:", originalWamid);
+      console.log("No appointment found for wamid:", originalWamid);
       return res.sendStatus(200);
     }
 
-    // Optional: block double processing at webhook level too
-    if (appt.appointmentPassType) return res.sendStatus(200);
+    console.log("CALLING SERVICE FOR:", appt._id.toString());
 
-    // 4) Call your service (NEW signature)
-    await approveOrRejectAppointment({
+    // ✅ IMPORTANT: pass appointmentPassType (NOT appointmentStatus)
+    const result = await approveOrRejectAppointment({
       appointmentMongoId: appt._id,
       appointmentPassType,
     });
 
+    console.log("SERVICE RESULT:", result);
+
     return res.sendStatus(200);
   } catch (err) {
-    console.error("Webhook error:", err);
+    console.error("Webhook error:", err?.message, err);
     return res.sendStatus(200);
   }
 });
+
 
 export default router;
