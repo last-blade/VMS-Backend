@@ -8,9 +8,9 @@ export async function approveOrRejectAppointment({ appointmentMongoId, appointme
   const passType = String(appointmentPassType || "").trim().toUpperCase();
 
   // ✅ prevent double processing
-  if (foundAppointment.appointmentPassType) {
-    return { skipped: true, status: foundAppointment.appointmentPassType };
-  }
+  // if (foundAppointment.appointmentPassType) {
+  //   return { skipped: true, status: foundAppointment.appointmentPassType };
+  // }
 
   const v0 = foundAppointment.visitors?.[0];
   const visitorName = v0?.fullname || "User";
