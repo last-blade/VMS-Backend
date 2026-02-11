@@ -12,7 +12,7 @@ const dashboard = asyncHandler(async (request, response) => {
     {
       $match: {
         plant: new mongoose.Types.ObjectId(request.user.plant),
-        appointmentPassType: "RED" || "GREEN" || "PURPLE",
+        appointmentPassType: {$in: ["RED", "GREEN", "PURPLE"]},
         createdAt: { $gte: startOfDay, $lte: endOfDay },
       },
     },
@@ -77,22 +77,20 @@ const dashboard = asyncHandler(async (request, response) => {
     },
   ]);
 
-  const pendingAppointments = await Appointment.aggregate([
+    const pendingAppointments = await Appointment.aggregate([
     {
-      $match: {
+        $match: {
         plant: new mongoose.Types.ObjectId(request.user.plant),
-        appointmentPassType: {
-          $exists: true,
-          $ne: ["RED", "GREEN", "PURPLE", "REJECT"],
-        },
         createdAt: { $gte: startOfDay, $lte: endOfDay },
-      },
+        $or: [
+            { appointmentPassType: { $exists: false } },
+            { appointmentPassType: null },
+            { appointmentPassType: { $nin: ["RED", "GREEN", "PURPLE", "REJECT"] } },
+        ],
+        },
     },
-
-    {
-      $count: "totalPendingAppointments",
-    },
-  ]);
+    { $count: "totalPendingAppointments" },
+    ]);
 
   let dashboardData = {};
 
