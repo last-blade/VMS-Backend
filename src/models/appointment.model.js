@@ -128,12 +128,12 @@ const appointmentSchema = new Schema({
         index: true,
     },
 
-    appointmentStatus: {
-        type: String,
-        enum: ["Approved", "Rejected", "Pending"],
-        index: true,
-        default: "Pending"
-    },
+    // appointmentStatus: {
+    //     type: String,
+    //     enum: ["Approved", "Rejected", "Pending"],
+    //     index: true,
+    //     default: "Pending"
+    // },
 
     isAppointmentActive: {
         type: Boolean,
@@ -150,7 +150,8 @@ const appointmentSchema = new Schema({
 
     appointmentPassType: {
         type: String,
-        enum: ["Red", "Yellow", "Purple"],
+        enum: ["RED", "YELLOW", "PURPLE", "REJECT"],
+        default: null,
         required: false,
         index: true,
     },

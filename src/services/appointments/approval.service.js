@@ -1,59 +1,71 @@
 import { Appointment } from "../../models/appointment.model.js";
-import { sendWhatsAppTemplate } from "../whatsapp/whatsapp.service.js"; 
+import { sendWhatsAppTemplate } from "../whatsapp/whatsapp.service.js";
 
-export async function approveOrRejectAppointment({ appointmentMongoId, appointmentStatus }) {
+export async function approveOrRejectAppointment({ appointmentMongoId, appointmentPassType }) {
   const foundAppointment = await Appointment.findById(appointmentMongoId);
   if (!foundAppointment) throw new Error("Appointment not found");
-console.log("foundAppointment", foundAppointment)
-  // prevent double processing
-    // prevent double processing (skip only if already finalized)
-    if (["Approved", "Rejected"].includes(foundAppointment.appointmentStatus)) {
-    return { skipped: true, status: foundAppointment.appointmentStatus };
-    }
 
+  const passType = String(appointmentPassType || "").trim().toUpperCase();
 
-  if (appointmentStatus === "Approved") {
-    foundAppointment.isAppointmentActive = true;
-
-    // safer indexing
-    const v0 = foundAppointment.visitors?.[0];
-    const visitorName = v0?.fullname || "User";
-    const phone = v0?.mobile;
-
-    if (phone) {
-      await sendWhatsAppTemplate({
-        to: String(phone),
-        messages: [
-          visitorName,
-          foundAppointment.appointmentId, // this is your APT-xxxx id
-        ],
-        templateName: "vms_appointment_approved_v3",
-        languageCode: "en",
-        urlButton: {
-          index: 0,
-          param: foundAppointment.appointmentId,
-        },
-      });
-    }
-  } else if (appointmentStatus === "Rejected") {
-    foundAppointment.isAppointmentActive = false;
-    const v0 = foundAppointment.visitors?.[0];
-    const visitorName = v0?.fullname || "User";
-    const phone = v0?.mobile;
-      await sendWhatsAppTemplate({
-        to: String(phone),
-        messages: [
-          visitorName,
-          foundAppointment.appointmentId, // this is your APT-xxxx id
-          "Can't meet right now"
-        ],
-        templateName: "vms_appointment_rejected",
-        languageCode: "en",
-      });
+  // ✅ prevent double processing: if already decided, ignore further clicks
+  if (foundAppointment.appointmentPassType) {
+    return { skipped: true, passType: foundAppointment.appointmentPassType };
   }
 
-  foundAppointment.appointmentStatus = appointmentStatus;
+  const v0 = foundAppointment.visitors?.[0];
+  const visitorName = v0?.fullname || "User";
+  const phone = v0?.mobile;
+
+  if (!phone) throw new Error("Visitor mobile missing");
+
+  // APPROVE-like flow for RED/GREEN/PURPLE
+  if (["RED", "GREEN", "PURPLE"].includes(passType)) {
+    foundAppointment.isAppointmentActive = true;
+    foundAppointment.appointmentPassType = passType;
+
+    // send approved pass to visitor
+    await sendWhatsAppTemplate({
+      to: String(phone),
+      messages: [
+        visitorName,
+        foundAppointment.appointmentId,
+      ],
+      templateName: "vms_appointment_approved_v3",
+      languageCode: "en",
+      urlButton: {
+        index: 0,
+        param: foundAppointment.appointmentId,
+      },
+    });
+  }
+
+  //REJECT flow
+  else if (passType === "REJECT") {
+    foundAppointment.isAppointmentActive = false;
+    foundAppointment.appointmentPassType = "REJECT";
+
+    await sendWhatsAppTemplate({
+      to: String(phone),
+      messages: [
+        visitorName,
+        foundAppointment.appointmentId,
+        "Can't meet right now",
+      ],
+      templateName: "vms_appointment_rejected",
+      languageCode: "en",
+    });
+  }
+
+  //unknown input
+  else {
+    return { skipped: true, reason: "unknown_pass_type", received: passType };
+  }
+
   await foundAppointment.save({ validateBeforeSave: false });
 
-  return { skipped: false, status: appointmentStatus };
+  return {
+    skipped: false,
+    passType: foundAppointment.appointmentPassType,
+    isActive: foundAppointment.isAppointmentActive,
+  };
 }
