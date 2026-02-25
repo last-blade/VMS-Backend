@@ -4,7 +4,7 @@ const getDepartments = asyncHandler(async (request, response) => {
 
     const { plantId } = request.query;
 
-    const filterplantId = plantId || request.user?.plant;
+    const filterplantId = request.user?.plant;
 
     if (!filterplantId) {
         return response.status(400).json(
