@@ -5,7 +5,7 @@ const getDepartments = asyncHandler(async (request, response) => {
     const { plantId } = request.query;
 
     const filterplantId = request.user?.plant;
-
+console.log("PlantID", filterplantId);
     if (!filterplantId) {
         return response.status(400).json(
             new apiResponse(400, null, "Plant ID is required")
