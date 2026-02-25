@@ -56,7 +56,10 @@ const visitorsCheckout = asyncHandler(async (request, response) => {
   const visitorName = v0?.fullname;
   // const visitorMobile = v0?.mobile;
   // const visitorsCompany = v0?.company;
-  const checkOutTime = appointment?.checkedOutTime;
+  // const checkOutTime = appointment?.checkedOutTime;
+  const checkOutTime = appointment?.checkedOutTime.toLocaleString("en-IN", {
+    timeZone: "Asia/Kolkata",
+  });
   const hostName = appointment.personToVisit.fullname;
   const whatsappResponse = await sendWhatsAppTemplate({
     to: appointment.personToVisit.mobile,

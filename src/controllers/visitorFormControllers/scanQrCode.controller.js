@@ -78,7 +78,9 @@ console.log(appointment)
     // const visitorMobile = v0?.mobile;
     // const visitorsCompany = v0?.company;
     const area = appointment?.areaToVisit?.areaName;
-    const checkInTime = appointment.checkedInTime;
+    const checkInTime = appointment.checkedInTime.toLocaleString("en-IN", {
+        timeZone: "Asia/Kolkata",
+    });
 console.log("checkintime",checkInTime)
     const whatsappResponse = await sendWhatsAppTemplate({
         to: appointment.personToVisit.mobile,
